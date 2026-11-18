@@ -3,338 +3,829 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>議題觀察室</title>
-<meta name="description" content="把複雜的社會議題攤開來，慢慢讀、好好想。">
+<title>另一面 The Other Side</title>
+<meta name="description" content="讓思考，成為一種生活方式。從日常現象出發，探索世界的不同面貌。">
+<meta name="theme-color" content="#F4F0E7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' fill='%23F4F0E7'/%3E%3Cpath d='M22.5 6a18 18 0 0 0 0 36z' fill='%23252B2D'/%3E%3Cpath d='M25.5 6a18 18 0 0 1 0 36' fill='none' stroke='%23C77D59' stroke-width='2.5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
+/* =========================================================
+ *  另一面 THE OTHER SIDE — Editorial Color Palette
+ *  紙張白 #F4F0E7・炭墨黑 #252B2D・陶土橘 #C77D59
+ *  鼠尾草綠 #9AA38D・沙岩米 #D9C8AE・霧藍灰 #647B83
+ * ========================================================= */
 :root{
-  --paper:#f4f1ea;--card:#f4f1ea;--ink:#141414;--muted:#5f5b53;--line:#cfc8ba;--rule:#141414;
-  --accent:#c8102e;--accent-soft:#f3d9dc;
+  --paper:#F4F0E7;--card:#ECE5D7;--sand:#D9C8AE;--ink:#252B2D;--muted:#6A6860;--line:#DCD2C1;--rule:#252B2D;
+  --accent:#C77D59;--accent-ink:#A35C3A;--sage:#9AA38D;--mist:#647B83;
   --sans:"Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
   --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --display:"Cormorant Garamond","Noto Serif TC",Georgia,serif;
 }
 @media (prefers-color-scheme:dark){
-  :root{--paper:#151412;--card:#151412;--ink:#ece8df;--muted:#a19b8f;--line:#38352f;--rule:#ece8df;--accent:#ff5a5f;--accent-soft:#3a1d20}
+  :root{--paper:#1C2022;--card:#24292B;--sand:#30302B;--ink:#ECE6DA;--muted:#A8A196;--line:#3A4042;--rule:#ECE6DA;--accent:#D98E6B;--accent-ink:#E4A587}
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6}
 button{font:inherit;color:inherit}
-.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+[hidden]{display:none!important}
+
+/* ---------- 頂部資訊列 ---------- */
+.util{border-bottom:1px solid var(--line);font-size:11.5px;color:var(--muted);letter-spacing:.12em}
+.util-in{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.util b{color:var(--ink);font-weight:700}
+.demo{margin-left:10px;background:var(--accent);color:#fff;padding:1px 7px;font-weight:700;letter-spacing:.1em}
 
 /* ---------- 報頭 ---------- */
-.masthead{padding-top:14px}
-.mast-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);letter-spacing:.06em;
-  padding-bottom:8px;border-bottom:1px solid var(--rule)}
-.mast-top b{color:var(--ink);font-weight:700}
-.mast-title{font-family:var(--serif);font-weight:900;text-align:center;font-size:clamp(40px,8vw,84px);line-height:1.05;letter-spacing:.12em;
-  margin:22px 0 8px;cursor:pointer}
-.mast-tag{text-align:center;font-family:var(--serif);font-size:15px;color:var(--muted);margin:0 0 18px;letter-spacing:.08em}
-.mast-rule{border:0;border-top:4px double var(--rule);margin:0}
+.mast{padding:46px 0 34px}
+.mast-in{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.brand{display:inline-flex;align-items:center;gap:18px;text-decoration:none;cursor:pointer}
+.mark{width:clamp(44px,6vw,72px);height:auto;color:var(--ink);flex:none}
+.bn{font-family:var(--serif);font-weight:600;font-size:clamp(46px,7.4vw,92px);line-height:1;letter-spacing:.1em}
+.mast-side{display:flex;flex-direction:column;gap:10px;text-align:right;padding-bottom:6px}
+.mast-side .en{font-family:var(--display);font-size:clamp(18px,2vw,24px);letter-spacing:.32em;text-transform:uppercase;font-weight:500}
+.mast-side .tg{font-family:var(--serif);font-size:14px;color:var(--muted);line-height:1.9;letter-spacing:.06em}
 
-/* ---------- 導覽列（上：議題／下：工具列） ---------- */
-.navbar{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--rule)}
-.nav-topics{display:flex;align-items:center;gap:14px;min-height:48px}
-.nav-label{font-size:11px;font-weight:700;letter-spacing:.24em;color:var(--muted);flex:none;padding-right:14px;border-right:1px solid var(--line);line-height:20px}
-.topics{display:flex;gap:2px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
-.topics::-webkit-scrollbar{display:none}
-.topic{border:0;background:transparent;padding:12px 10px;cursor:pointer;font-size:14.5px;font-weight:500;position:relative;display:inline-flex;align-items:baseline;gap:5px;white-space:nowrap;flex:none}
-.topic i{display:none}
-.topic small{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
-.topic::after{content:"";position:absolute;left:10px;right:10px;bottom:0;height:3px;background:var(--c,var(--accent));transform:scaleX(0);transition:transform .2s;transform-origin:left}
-.topic:hover::after,.topic.on::after{transform:scaleX(1)}
-.topic.on{font-weight:700}
+/* ---------- 導覽列 ---------- */
+.nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:16px;min-height:58px}
+.secs{display:flex;gap:4px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.secs::-webkit-scrollbar{display:none}
+.nv{border:0;background:none;padding:18px 12px 17px;cursor:pointer;font-size:15px;font-weight:500;letter-spacing:.06em;white-space:nowrap;position:relative;display:inline-flex;align-items:baseline;gap:6px;flex:none;color:var(--muted)}
+.nv small{font-size:11px;font-variant-numeric:tabular-nums;opacity:.8}
+.nv::after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;background:var(--c,var(--ink));transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.nv:hover{color:var(--ink)}
+.nv:hover::after,.nv.on::after{transform:scaleX(1)}
+.nv.on{color:var(--ink);font-weight:700}
+.tools{display:flex;align-items:center;gap:10px;flex:none}
 
-/* 工具列：所有控制項同高、同框線、同圓角、同字級 */
-.nav-tools{border-top:1px solid var(--line);background:color-mix(in srgb,var(--ink) 3%,var(--paper))}
-.nav-tools .wrap{display:flex;align-items:center;gap:10px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
-.nav-sp{flex:1}
-.ctl{--h:40px;height:var(--h);display:inline-flex;align-items:center;gap:8px;padding:0 14px;
-  border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);
+/* 控制項：同高、同框線、同圓角 */
+.ctl{--h:40px;height:var(--h);display:inline-flex;align-items:center;gap:8px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink);
   font:inherit;font-size:14px;line-height:1;white-space:nowrap;transition:border-color .15s,box-shadow .15s,background .15s}
 .ctl:hover{border-color:var(--muted)}
 .ctl:focus-within{border-color:var(--ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
 .ctl .ico{color:var(--muted);font-size:17px;line-height:1;transform:translateY(-1px)}
 .ctl input,.ctl select{border:0;outline:none;background:transparent;color:inherit;font:inherit;font-size:14px;height:100%;padding:0;min-width:0}
-.ctl.search{flex:0 1 380px;min-width:200px;cursor:text}
+.ctl.search{width:240px;cursor:text}
 .ctl.search input{flex:1}
-.ctl.sort{padding-right:10px;cursor:pointer}
+.ctl.sort{padding-right:12px;cursor:pointer}
 .ctl-k{color:var(--muted);font-size:13px;padding-right:8px;border-right:1px solid var(--line);height:18px;display:inline-flex;align-items:center}
-.ctl.sort select{cursor:pointer;padding-right:18px;appearance:none;-webkit-appearance:none;font-weight:500;
+.ctl select{cursor:pointer;padding-right:18px;appearance:none;-webkit-appearance:none;font-weight:500;
   background:linear-gradient(45deg,transparent 50%,var(--muted) 50%) right 7px center/5px 5px no-repeat,
              linear-gradient(-45deg,transparent 50%,var(--muted) 50%) right 2px center/5px 5px no-repeat}
 .ctl-btn{cursor:pointer;font-weight:700;letter-spacing:.04em}
 .ctl-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
 .ctl-btn.primary:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .ctl-btn.ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.select{padding:7px 8px;border:1px solid var(--rule);border-radius:0;background:transparent;color:var(--ink);font:inherit;font-size:13px}
-.btn{border:1px solid var(--rule);background:transparent;padding:7px 14px;border-radius:0;cursor:pointer;font-size:13px;font-weight:700;letter-spacing:.06em;
+.select{padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);font:inherit;font-size:14px}
+.btn{border:1px solid var(--ink);background:transparent;padding:10px 20px;border-radius:999px;cursor:pointer;font-size:14px;font-weight:700;letter-spacing:.06em;
   display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--ink);white-space:nowrap;transition:background .15s,color .15s}
 .btn:hover{background:var(--ink);color:var(--paper)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
 .btn.primary:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .btn:disabled{opacity:.45;cursor:default}
-.status{color:var(--muted);font-size:12px;margin:18px 0 10px;letter-spacing:.1em}
 
 .auth{display:flex;align-items:center;gap:10px;min-height:40px}
 .auth .gbtn{height:40px;display:flex;align-items:center}
-.ctl.user{padding:0 12px 0 6px;max-width:300px;cursor:default}
-.ctl.user .av{width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--paper);font-family:var(--serif);font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;flex:none}
+.ctl.user{padding:0 12px 0 6px;max-width:260px;cursor:default}
+.ctl.user .av{width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--paper);font-family:var(--serif);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex:none}
 .ctl.user .em{overflow:hidden;text-overflow:ellipsis;font-size:13.5px}
-.ctl.user .badge{flex:none;color:#fff;background:var(--accent);font-size:11px;font-weight:700;padding:3px 6px;border-radius:3px;letter-spacing:.08em}
+.ctl.user .badge{flex:none;color:#fff;background:var(--accent);font-size:11px;font-weight:700;padding:3px 7px;border-radius:999px;letter-spacing:.08em}
 .auth .hint-off{font-size:12px;color:var(--muted)}
 .cmt-signin{margin-top:10px;min-height:0}
-[hidden]{display:none!important}
+
+/* ---------- 品牌理念 ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;padding-top:84px;padding-bottom:84px;align-items:end}
+.kick{font-family:var(--display);font-size:14px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 22px;font-weight:600}
+.hero h2{font-family:var(--serif);font-weight:600;font-size:clamp(38px,5.4vw,72px);line-height:1.28;letter-spacing:.04em;margin:0}
+.hero h2 em{font-style:normal;color:var(--accent);white-space:nowrap}
+.hero-r p{font-family:var(--serif);font-size:17px;line-height:2.1;margin:0 0 28px}
+.traits{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.traits li{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.traits b{font-family:var(--serif);font-size:18px;font-weight:700}
+.traits span{font-size:13.5px;color:var(--muted);line-height:1.7}
+.values{font-family:var(--display);font-size:14px;letter-spacing:.3em;margin-top:22px;color:var(--muted)}
+
+/* ---------- 區塊標題 ---------- */
+.blk{padding:20px 0 72px}
+.sh{display:flex;align-items:baseline;gap:16px;border-top:1px solid var(--rule);padding-top:16px;margin-bottom:30px}
+.sh .no{font-family:var(--display);font-style:italic;font-size:17px;color:var(--accent-ink)}
+.sh h3{font-family:var(--serif);font-weight:600;font-size:26px;margin:0;letter-spacing:.06em}
+.sh .en{font-family:var(--display);font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.sh .more{margin-left:auto;border:0;background:none;cursor:pointer;font-size:13.5px;font-weight:700;letter-spacing:.06em;color:var(--ink);padding:4px 0;border-bottom:1px solid currentColor}
+.sh .more:hover{color:var(--accent-ink)}
 
 /* ---------- 文章 ---------- */
-.tag{display:inline-block;font-size:12px;font-weight:700;color:var(--c,var(--accent));letter-spacing:.14em}
-.tag .subp{font-weight:400;color:var(--muted);letter-spacing:.04em}
-.title{font-family:var(--serif);font-weight:900;font-size:20px;line-height:1.4;margin:0;
+.tag{display:inline-block;font-size:12px;font-weight:700;color:var(--ci,var(--accent-ink));letter-spacing:.16em}
+.tag .subp{font-weight:400;color:var(--muted);letter-spacing:.06em}
+@media (prefers-color-scheme:dark){.tag{color:var(--c,var(--accent))}}
+.title{font-family:var(--serif);font-weight:600;font-size:21px;line-height:1.5;margin:0;letter-spacing:.02em;
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.excerpt{font-family:var(--serif);font-size:14px;line-height:1.85;color:var(--muted);margin:0;text-align:justify;
-  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.excerpt{font-family:var(--serif);font-size:14.5px;line-height:1.95;color:var(--muted);margin:0;text-align:justify;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .excerpt.none{font-style:italic;opacity:.7}
-.foot{margin-top:auto;padding-top:8px;display:flex;gap:12px;font-size:11.5px;color:var(--muted);letter-spacing:.04em;flex-wrap:wrap}
+.foot{margin-top:auto;padding-top:6px;display:flex;gap:12px;font-size:11.5px;color:var(--muted);letter-spacing:.06em;flex-wrap:wrap;align-items:center}
 .foot .type{font-weight:700;color:var(--ink)}
-.cover{aspect-ratio:3/2;background:color-mix(in srgb,var(--ink) 6%,var(--paper));display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
-.cover img{width:100%;height:100%;object-fit:cover;object-position:top center;filter:grayscale(1) contrast(1.05);transition:filter .35s}
-.card:hover .cover img,.feature:hover .cover img{filter:none}
-.cover .ph{font-family:var(--serif);font-size:56px;font-weight:900;color:var(--c,var(--ink));opacity:.35}
+.foot .src{border:1px solid var(--muted);padding:0 6px;border-radius:999px;font-size:10.5px}
+.cover{aspect-ratio:4/3;background:color-mix(in srgb,var(--c,var(--sand)) 22%,var(--paper));display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.cover img{width:100%;height:100%;object-fit:cover;object-position:top center;filter:sepia(.18) saturate(.85);transition:transform .6s ease,filter .4s}
+.card:hover .cover img,.feature:hover .cover img{transform:scale(1.03);filter:none}
+.cover .ph{font-family:var(--serif);font-size:64px;font-weight:600;color:var(--ci,var(--ink));opacity:.4}
 
-.feature{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:32px;padding:26px 0 30px;border-bottom:4px double var(--rule);cursor:pointer}
-.feature .body{display:flex;flex-direction:column;gap:14px;order:-1}
-.feature .title{font-size:clamp(28px,4.2vw,46px);line-height:1.25;-webkit-line-clamp:4}
-.feature .title:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
-.feature .excerpt{font-size:16px;-webkit-line-clamp:6;color:var(--ink);opacity:.85}
-.feature .excerpt:not(.none)::first-letter{font-size:2.6em;float:left;line-height:1;margin:.04em .12em 0 0;font-weight:900;color:var(--accent)}
-.feature .cover{aspect-ratio:4/3;align-self:start}
-.feature .read{align-self:flex-start;margin-top:4px}
-.label-new{font-size:11px;font-weight:700;letter-spacing:.3em;color:#fff;background:var(--accent);align-self:flex-start;padding:3px 8px}
+.feature{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;cursor:pointer;align-items:center}
+.feature .body{display:flex;flex-direction:column;gap:18px}
+.feature .title{font-size:clamp(30px,3.8vw,50px);line-height:1.32;-webkit-line-clamp:4;font-weight:600}
+.feature:hover .title{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:8px}
+.feature .excerpt{font-size:16.5px;-webkit-line-clamp:5;color:var(--ink);opacity:.82}
+.feature .excerpt:not(.none)::first-letter{font-size:2.8em;float:left;line-height:1;margin:.06em .14em 0 0;font-weight:700;color:var(--accent)}
+.feature .cover{aspect-ratio:5/4}
+.feature .read{align-self:flex-start;margin-top:6px}
+.label-new{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.3em;color:var(--accent-ink);text-transform:uppercase}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));padding-bottom:60px;margin-right:-1px}
-.card{padding:22px 22px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);cursor:pointer;display:flex;flex-direction:column;gap:10px;transition:background .2s}
-.card:hover{background:color-mix(in srgb,var(--ink) 4%,var(--paper))}
-.card:hover .title{text-decoration:underline;text-underline-offset:4px}
-.card .body{display:flex;flex-direction:column;gap:9px;flex:1}
+.card{cursor:pointer;display:flex;flex-direction:column;gap:16px}
+.card:hover .title{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+.card .body{display:flex;flex-direction:column;gap:10px;flex:1}
+.mosaic{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:56px 36px}
+.mosaic .m-lg{grid-column:span 7}
+.mosaic .m-lg .cover{aspect-ratio:3/2}
+.mosaic .m-lg .title{font-size:28px}
+.mosaic .m-md{grid-column:span 5;padding-top:72px}
+.mosaic .m-md .cover{aspect-ratio:4/5}
+.mosaic .m-sm{grid-column:span 4}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:56px 36px;padding-bottom:84px}
 .empty{text-align:center;color:var(--muted);padding:90px 0;font-size:15px;font-family:var(--serif)}
-.empty b{display:block;font-size:26px;color:var(--ink);margin-bottom:8px}
+.empty b{display:block;font-size:26px;color:var(--ink);margin-bottom:8px;font-weight:600}
+.status{color:var(--muted);font-size:12px;margin:0 0 26px;letter-spacing:.14em}
+
+/* 專題切片 */
+.slices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.slice{background:var(--card);border-top:3px solid var(--c);padding:28px 24px 26px;cursor:pointer;display:flex;flex-direction:column;gap:10px;transition:background .2s,transform .2s;text-align:left;border-left:0;border-right:0;border-bottom:0}
+.slice:hover{background:color-mix(in srgb,var(--c) 18%,var(--card));transform:translateY(-2px)}
+.slice .sn{font-family:var(--display);font-size:42px;line-height:1;color:var(--ci)}
+@media (prefers-color-scheme:dark){.slice .sn{color:var(--c)}}
+.slice b{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.06em}
+.slice .se{font-family:var(--display);font-size:12px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;margin-top:-6px}
+.slice p{margin:4px 0 0;font-size:13.5px;line-height:1.8;color:var(--muted)}
+.slice .sl{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.slice .sl i{display:block;font-style:normal;font-family:var(--serif);color:var(--ink);font-size:14px;margin-top:3px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* 熱門 + 閱覽室 */
+.duo{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px}
+.pop{list-style:none;margin:0;padding:0}
+.pop li{display:grid;grid-template-columns:52px 1fr;gap:8px;padding:18px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.pop li:first-child{padding-top:0}
+.pop .pn{font-family:var(--display);font-size:34px;line-height:1;color:var(--accent)}
+.pop b{display:block;font-family:var(--serif);font-weight:600;font-size:17px;line-height:1.55;margin:4px 0 4px}
+.pop li:hover b{text-decoration:underline;text-underline-offset:4px}
+.pop small{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.lib-teaser{background:var(--ink);color:var(--paper);padding:40px 40px 36px;display:flex;flex-direction:column;gap:18px}
+.lib-teaser .kick{color:var(--sand);margin:0}
+.lib-teaser h4{font-family:var(--serif);font-weight:600;font-size:32px;margin:0;letter-spacing:.08em}
+.lib-teaser p{margin:0;font-family:var(--serif);font-size:15px;line-height:1.95;opacity:.85}
+.lt-f{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid color-mix(in srgb,var(--paper) 25%,transparent)}
+.lt-f li{font-size:13px;padding:12px 10px 12px 0;border-bottom:1px solid color-mix(in srgb,var(--paper) 25%,transparent);display:flex;gap:8px;align-items:baseline}
+.lt-f li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;transform:translateY(-1px)}
+.lt-docs{display:flex;flex-direction:column}
+.lt-docs div{display:flex;gap:14px;align-items:baseline;padding:10px 0;border-bottom:1px dotted color-mix(in srgb,var(--paper) 30%,transparent);cursor:pointer;font-family:var(--serif);font-size:15px}
+.lt-docs div:hover span{text-decoration:underline;text-underline-offset:4px}
+.lt-docs small{font-family:var(--sans);font-size:11.5px;opacity:.65;flex:none;letter-spacing:.06em;min-width:76px}
+.lib-teaser .btn{border-color:var(--paper);color:var(--paper);align-self:flex-start}
+.lib-teaser .btn:hover{background:var(--paper);color:var(--ink)}
+@media (prefers-color-scheme:dark){.lib-teaser{background:var(--card);color:var(--ink)}.lib-teaser .btn{border-color:var(--ink);color:var(--ink)}.lib-teaser .btn:hover{background:var(--ink);color:var(--paper)}}
+
+/* ---------- 切片頁 / 閱覽室頁 ---------- */
+.sec-hero{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;padding:72px 0 40px;align-items:end;border-bottom:1px solid var(--rule)}
+.sec-num{font-family:var(--display);font-style:italic;font-size:18px;color:var(--ci,var(--accent-ink));margin-bottom:10px}
+@media (prefers-color-scheme:dark){.sec-num{color:var(--c)}}
+.sec-t{font-family:var(--serif);font-weight:600;font-size:clamp(40px,5.6vw,72px);line-height:1.15;margin:0;letter-spacing:.08em}
+.sec-en{font-family:var(--display);font-size:15px;letter-spacing:.36em;text-transform:uppercase;color:var(--muted);margin:14px 0 0}
+.sec-d{font-family:var(--serif);font-size:17px;line-height:2;margin:0}
+.sec-k{font-size:12.5px;color:var(--muted);letter-spacing:.2em;margin:14px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;padding:22px 0;flex-wrap:wrap}
+.chips{display:flex;gap:8px;flex-wrap:wrap;flex:1;min-width:0}
+.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:7px 15px;cursor:pointer;font-size:13.5px;display:inline-flex;gap:6px;align-items:baseline}
+.chip small{font-size:11px;color:var(--muted)}
+.chip:hover{border-color:var(--ink)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.chip.on small{color:inherit;opacity:.7}
+
+.feats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.feats div{padding:22px 16px 22px 0}
+.feats div+div{padding-left:16px;border-left:1px solid var(--line)}
+.feats i{display:block;font-style:normal;font-family:var(--display);font-size:22px;color:var(--accent);line-height:1;margin-bottom:8px}
+.feats b{display:block;font-family:var(--serif);font-size:15px;font-weight:600;margin-bottom:4px}
+.feats span{font-size:12.5px;color:var(--muted);line-height:1.7}
+
+.cat{width:100%;border-collapse:collapse;margin-bottom:84px}
+.cat th{text-align:left;font-size:11px;letter-spacing:.24em;color:var(--muted);font-weight:700;padding:10px 12px;border-bottom:1px solid var(--rule)}
+.cat td{padding:18px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:13px;color:var(--muted)}
+.cat tr[data-id]{cursor:pointer;transition:background .15s}
+.cat tr[data-id]:hover{background:var(--card)}
+.cat .ct b{display:block;font-family:var(--serif);font-weight:600;font-size:16.5px;color:var(--ink);line-height:1.5}
+.cat .ct span{display:block;margin-top:4px;font-family:var(--serif);font-size:13px;line-height:1.7;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.cat tr:hover .ct b{text-decoration:underline;text-underline-offset:4px}
+.pill{display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:999px;border:1px solid var(--line);white-space:nowrap;color:var(--ink)}
+.pill.src{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.cat .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---------- 編輯室手記（四則輪播） ---------- */
+.manifesto{background:var(--card);padding:56px 0 64px}
+.mf-head{display:flex;align-items:center;gap:18px;border-bottom:1px solid var(--rule);margin-bottom:34px}
+.mf-kicker{flex:none;font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:.3em;color:var(--accent-ink);text-transform:uppercase}
+.mf-tabs{display:flex;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.mf-tabs::-webkit-scrollbar{display:none}
+.mf-tabs button{flex:1;min-width:max-content;border:0;background:none;padding:12px 14px 14px;cursor:pointer;text-align:left;position:relative;color:var(--muted);display:flex;align-items:baseline;gap:8px}
+.mf-tabs .t-n{font-family:var(--display);font-weight:600;font-size:17px}
+.mf-tabs .t-l{font-size:14px;font-weight:500;white-space:nowrap}
+.mf-tabs button:hover,.mf-tabs button.on{color:var(--ink)}
+.mf-tabs button.on .t-n{color:var(--accent)}
+.mf-tabs button.on .t-l{font-weight:700}
+.mf-tabs i{position:absolute;left:14px;right:14px;bottom:-1px;height:2px;background:transparent;overflow:hidden}
+.mf-tabs i::after{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleX(0);transform-origin:left}
+.mf-tabs button.done i::after{transform:scaleX(1);background:var(--line)}
+.mf-tabs button.on i{background:var(--line)}
+.mf-tabs button.on i::after{background:var(--accent);animation:rotfill var(--dur,10s) linear forwards}
+.mf-ctrl{display:flex;gap:6px;flex:none}
+.paused .mf-tabs button.on i::after{animation-play-state:paused}
+@keyframes rotfill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.rot-arrow{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;background:var(--paper);cursor:pointer;font-size:14px;color:var(--ink);display:flex;align-items:center;justify-content:center}
+.rot-arrow:hover{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.rot-pause{font-size:10px;letter-spacing:-1px}
+.rot{display:grid;touch-action:pan-y}
+.rot-slide{grid-area:1/1;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .55s ease,transform .55s ease,visibility 0s .55s;align-content:start}
+.rot-slide.on{opacity:1;visibility:visible;transform:none;transition:opacity .55s ease,transform .55s ease,visibility 0s}
+.s-title{font-family:var(--serif);font-weight:600;font-size:24px;line-height:1.45;margin:0 0 20px;letter-spacing:.04em}
+.s-title.big{font-size:clamp(26px,2.9vw,34px);line-height:1.4}
+.s-en{font-family:var(--display);font-size:14px;color:var(--muted);letter-spacing:.24em;text-transform:uppercase;margin:0}
+.s-ask,.s-six{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:48px;align-items:start}
+.s-essay .s-side{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;padding-bottom:18px;margin-bottom:20px;border-bottom:1px solid var(--rule)}
+.s-essay .s-title{margin:0}
+.s-essay .s-title br{display:none}
+.s-essay .pull{max-width:460px;margin:0}
+.s-side .pull{font-family:var(--serif);font-size:17px;font-weight:600;line-height:1.85;margin:6px 0 0;padding-left:16px;border-left:3px solid var(--accent)}
+.five{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--rule)}
+.five li{padding:20px 18px 4px 0}
+.five li+li{padding-left:18px;border-left:1px solid var(--line)}
+.five .n{display:block;font-family:var(--display);font-weight:600;font-size:30px;color:var(--accent);line-height:1}
+.five b{display:block;font-family:var(--serif);font-weight:700;font-size:17px;line-height:1.55;margin:12px 0 8px}
+.five p{margin:0 0 6px;font-size:13.5px;line-height:1.85;color:var(--muted)}
+.essay{column-count:3;column-gap:36px;column-rule:1px solid var(--line);font-family:var(--serif);font-size:15px;line-height:1.95}
+.essay p{margin:0 0 .75em;break-inside:avoid}
+.essay ul{margin:0 0 .75em;padding-left:1.2em;break-inside:avoid}
+.essay li{margin-bottom:.25em}
+.essay li::marker{color:var(--accent)}
+.essay .em{font-weight:700;color:var(--accent-ink)}
+.essay-more{display:none;margin-top:10px;border:0;border-bottom:1px solid var(--ink);background:none;padding:4px 0;cursor:pointer;font-size:14px;font-weight:700}
+.ask-intro p{font-family:var(--serif);font-size:15px;line-height:1.9;margin:0 0 .6em}
+.ask-intro b{color:var(--accent-ink)}
+.ask{width:100%;border-collapse:collapse;font-size:15px}
+.ask th{text-align:left;font-size:12px;letter-spacing:.2em;color:var(--muted);padding:6px 14px 8px;border-bottom:1px solid var(--rule)}
+.ask td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.ask td:first-child{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--accent);width:38%}
+.ask td:last-child{font-family:var(--serif);font-weight:600}
+.ask td:last-child::before{content:"→ ";color:var(--accent)}
+.ask-key{font-family:var(--serif);font-weight:700;font-size:17px;line-height:1.7;margin:22px 0 0;padding:14px 18px;border-left:3px solid var(--accent);background:var(--paper)}
+.six{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule)}
+.six li{padding:18px 16px 18px 0;border-bottom:1px solid var(--line)}
+.six li:not(:nth-child(3n+1)){padding-left:16px;border-left:1px solid var(--line)}
+.six .n{display:block;font-family:var(--display);font-weight:600;font-size:28px;color:var(--accent);line-height:1}
+.six b{display:block;font-family:var(--serif);font-weight:700;font-size:18px;margin:8px 0 4px}
+.six p{margin:0;font-size:13.5px;line-height:1.75;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.rot-slide{transition:none}.mf-tabs button.on i::after{animation:none;transform:scaleX(1)}}
+
+/* ---------- 頁尾 ---------- */
+.site-foot{border-top:1px solid var(--rule);padding:48px 0 56px;margin-top:0}
+.sf-in{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,3fr);gap:40px;align-items:start}
+.site-foot .brand .mark{width:34px}
+.site-foot .brand .bn{font-size:28px}
+.site-foot p{font-family:var(--serif);font-size:14px;color:var(--muted);margin:14px 0 0;line-height:1.9}
+.sf-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px}
+.sf-nav button{border:0;background:none;text-align:left;padding:2px 0;cursor:pointer;font-size:14px;color:var(--muted)}
+.sf-nav button:hover{color:var(--ink)}
+.sf-en{font-family:var(--display);font-size:13px;letter-spacing:.24em;color:var(--muted);line-height:2;text-align:right}
 
 /* ---------- 閱讀器 ---------- */
 .reader{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;
-  --r-bg:#e9e5dc;--r-paper:#f7f4ee;--r-ink:#141414;--r-muted:#6a655b;--r-line:#d2cbbd;--r-bar:#141414}
-@media (prefers-color-scheme:dark){.reader{--r-bg:#0e0d0c;--r-paper:#1b1a17;--r-ink:#ece8df;--r-muted:#a19b8f;--r-line:#38352f;--r-bar:#000}}
+  --r-bg:#E7E0D2;--r-paper:#F4F0E7;--r-ink:#252B2D;--r-muted:#6A6860;--r-line:#D6CCBA;--r-bar:#252B2D}
+@media (prefers-color-scheme:dark){.reader{--r-bg:#141718;--r-paper:#1C2022;--r-ink:#ECE6DA;--r-muted:#A8A196;--r-line:#3A4042;--r-bar:#0E1011}}
+.reader[data-mode=night]{--r-bg:#141718;--r-paper:#1C2022;--r-ink:#ECE6DA;--r-muted:#A8A196;--r-line:#3A4042;--r-bar:#0E1011}
 .reader.open{display:flex}
 .reader{background:var(--r-bg);color:var(--r-ink)}
-.rbar{position:relative;display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--r-bar);color:#f4f1ea;flex-wrap:wrap}
+.rbar{position:relative;display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--r-bar);color:#F4F0E7;flex-wrap:wrap}
+.rgrp{display:flex;gap:6px;align-items:center}
 .rprog{position:absolute;left:0;right:0;bottom:-3px;height:3px}
 .rprog i{display:block;height:100%;width:0;background:var(--accent);transition:width .1s}
-.rbtn{border:1px solid currentColor;background:transparent;color:inherit;padding:5px 11px;border-radius:0;cursor:pointer;font-size:13px;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;opacity:.9}
-.rbtn:hover{opacity:1;background:#f4f1ea;color:#141414}
+.rbtn{border:1px solid currentColor;background:transparent;color:inherit;padding:5px 11px;border-radius:999px;cursor:pointer;font-size:13px;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:5px;opacity:.88}
+.rbtn:hover{opacity:1;background:#F4F0E7;color:#252B2D}
 .rbtn.on{background:var(--accent);border-color:var(--accent);color:#fff;opacity:1}
 .rbtn.on:hover{background:var(--r-ink);border-color:var(--r-ink);color:var(--r-paper)}
 .rbtn:disabled{opacity:.4;cursor:default}
+.rbtn .cnt{background:var(--accent);color:#fff;font-size:10.5px;padding:0 6px;border-radius:999px;font-weight:700}
+.rbtn .cnt:empty{display:none}
+.rbtn.on .cnt{background:#fff;color:var(--accent-ink)}
 .rtitle{flex:1;min-width:120px;display:flex;align-items:baseline;gap:12px;overflow:hidden}
-.rtitle .tag{color:#ff8a8f}
-.rtitle b{font-family:var(--serif);font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rtitle .tag{color:var(--sand)}
+.rtitle b{font-family:var(--serif);font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rpage{font-size:12.5px;opacity:.75;min-width:56px;text-align:center;font-variant-numeric:tabular-nums}
 .rmain{flex:1;display:flex;min-height:0;position:relative}
 .rbody{flex:1;overflow:auto;position:relative}
 .pages{display:flex;flex-direction:column;align-items:center;gap:22px;padding:32px 16px 90px}
-.page{background:#fff;box-shadow:0 1px 0 var(--r-line),0 0 0 1px var(--r-line);position:relative;flex:none}
-.page canvas{display:block}
+.page{background:#fff;box-shadow:0 1px 0 var(--r-line),0 0 0 1px var(--r-line),0 12px 30px -18px rgba(37,43,45,.35);position:relative;flex:none}
+.page canvas{display:block;transition:filter .3s}
+.reader[data-mode=warm] .page canvas,.reader[data-mode=warm] .imgwrap img{filter:sepia(.22) saturate(.9) brightness(.98)}
+.reader[data-mode=night] .page canvas{filter:invert(.88) hue-rotate(180deg)}
+.reader[data-mode=night] .page{background:#1f1f1f}
 .page .pnum{position:absolute;left:50%;bottom:-19px;transform:translateX(-50%);font-size:11px;color:var(--r-muted);letter-spacing:.1em}
+.page.flash{animation:flash 1.2s ease}
+@keyframes flash{0%,40%{box-shadow:0 0 0 3px var(--accent)}100%{box-shadow:0 0 0 1px var(--r-line)}}
+.hl{position:absolute;inset:0;pointer-events:none}
+.hl i{position:absolute;background:rgba(199,125,89,.3);mix-blend-mode:multiply;border-radius:2px}
+.hl i.cur{background:rgba(199,125,89,.55);box-shadow:0 0 0 2px #C77D59}
+.hl i.mk{background:rgba(154,163,141,.5)}
+.reader[data-mode=night] .hl i{mix-blend-mode:normal;opacity:.6}
 .imgwrap{padding:32px 16px 90px;text-align:center}
 .imgwrap img{max-width:100%;box-shadow:0 0 0 1px var(--r-line)}
 
-.rinfo{width:340px;flex:0 0 340px;border-left:1px solid var(--r-line);background:var(--r-paper);overflow:auto;padding:24px 22px;display:flex;flex-direction:column;gap:22px}
+.rinfo{width:360px;flex:0 0 360px;border-left:1px solid var(--r-line);background:var(--r-paper);display:flex;flex-direction:column;min-height:0}
 .reader.noinfo .rinfo{display:none}
-.rinfo .tag{color:var(--accent)}
-.rinfo h2{font-family:var(--serif);font-weight:900;font-size:22px;line-height:1.4;margin:6px 0 0;padding-bottom:14px;border-bottom:4px double var(--r-ink)}
+.rtabs{display:flex;flex:none;border-bottom:1px solid var(--r-line);padding:0 10px;overflow-x:auto;scrollbar-width:none}
+.rtabs button{border:0;background:none;padding:13px 10px 12px;cursor:pointer;font-size:13.5px;color:var(--r-muted);position:relative;white-space:nowrap}
+.rtabs button.on{color:var(--r-ink);font-weight:700}
+.rtabs button.on::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;background:var(--accent)}
+.rpanel{display:none;flex:1;overflow:auto;padding:22px;flex-direction:column;gap:22px}
+.rpanel.on{display:flex}
+.rinfo .tag{color:var(--accent-ink)}
+@media (prefers-color-scheme:dark){.rinfo .tag{color:var(--accent)}}
+.rinfo h2{font-family:var(--serif);font-weight:600;font-size:22px;line-height:1.45;margin:6px 0 0;padding-bottom:16px;border-bottom:1px solid var(--r-ink)}
 .rinfo dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:13px}
 .rinfo dt{color:var(--r-muted);letter-spacing:.1em}.rinfo dd{margin:0;word-break:break-all}
 .rinfo .rbtn{color:var(--r-ink)}
 .rinfo .rbtn:hover{background:var(--r-ink);color:var(--r-paper)}
 .rinfo .rbtn.on{color:#fff}
-.sec-l{font-size:12px;font-weight:700;letter-spacing:.24em;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;
-  padding-bottom:6px;border-bottom:1px solid var(--r-ink)}
-.sec-l button{border:0;background:none;color:var(--accent);cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.1em}
-.summary{font-family:var(--serif);font-size:14.5px;line-height:1.9;white-space:pre-wrap;word-break:break-word}
+.sec-l{font-size:12px;font-weight:700;letter-spacing:.24em;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;padding-bottom:6px;border-bottom:1px solid var(--r-ink)}
+.sec-l button{border:0;background:none;color:var(--accent-ink);cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.1em}
+.summary{font-family:var(--serif);font-size:14.5px;line-height:1.95;white-space:pre-wrap;word-break:break-word}
 .summary.none{color:var(--r-muted);font-style:italic}
-.rinfo textarea{width:100%;border:1px solid var(--r-line);border-radius:0;padding:10px;font:inherit;font-size:13.5px;line-height:1.7;background:var(--r-bg);color:var(--r-ink);resize:vertical}
-.rinfo textarea:focus{outline:none;border-color:var(--r-ink)}
-.row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.nextcard{border-top:1px solid var(--r-ink);padding:10px 0 4px;cursor:pointer}
-.nextcard small{font-size:11px;color:var(--accent);letter-spacing:.2em;font-weight:700}
-.nextcard div{font-family:var(--serif);font-weight:900;font-size:15.5px;line-height:1.5;margin-top:3px}
-.nextcard:hover div{text-decoration:underline;text-underline-offset:3px}
+.rinfo textarea,.rinfo input[type=search],.rinfo input[type=number]{width:100%;border:1px solid var(--r-line);border-radius:6px;padding:9px 10px;font:inherit;font-size:13.5px;line-height:1.7;background:var(--r-bg);color:var(--r-ink)}
+.rinfo textarea{resize:vertical}
+.rinfo textarea:focus,.rinfo input:focus{outline:none;border-color:var(--r-ink)}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.hint{font-size:12px;color:var(--muted);line-height:1.75;margin:0}
+.rinfo .hint{color:var(--r-muted)}
+.nextcard,.relcard{border-top:1px solid var(--r-line);padding:10px 0 6px;cursor:pointer}
+.nextcard small,.relcard small{font-size:11px;color:var(--accent-ink);letter-spacing:.18em;font-weight:700}
+@media (prefers-color-scheme:dark){.nextcard small,.relcard small{color:var(--accent)}}
+.nextcard div,.relcard div{font-family:var(--serif);font-weight:600;font-size:15px;line-height:1.55;margin-top:3px}
+.nextcard:hover div,.relcard:hover div{text-decoration:underline;text-underline-offset:3px}
+
+/* 目錄・搜尋・標記 */
+.toc{display:flex;flex-direction:column}
+.toc button{border:0;background:none;text-align:left;cursor:pointer;padding:8px 0 8px calc(var(--d,0) * 14px);border-bottom:1px dotted var(--r-line);font-family:var(--serif);font-size:14px;line-height:1.55;display:flex;gap:10px;justify-content:space-between}
+.toc button[style*="--d:0"]{font-weight:600}
+.toc button:hover{color:var(--accent-ink)}
+.toc button em{font-style:normal;font-family:var(--sans);font-size:11.5px;color:var(--r-muted);flex:none;font-variant-numeric:tabular-nums}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px}
+.pgrid button{border:1px solid var(--r-line);background:var(--r-bg);border-radius:6px;padding:7px 0;cursor:pointer;font-size:12.5px;font-variant-numeric:tabular-nums}
+.pgrid button:hover,.pgrid button.on{border-color:var(--accent);color:var(--accent-ink)}
+.jump{display:flex;gap:6px;align-items:center}
+.jump input{width:90px!important}
+.findf{display:flex;gap:6px}
+.findf input{flex:1}
+.fnav{display:flex;gap:6px;align-items:center;font-size:12.5px;color:var(--r-muted)}
+.fnav span{flex:1;text-align:center;font-variant-numeric:tabular-nums}
+.fres{display:flex;flex-direction:column}
+.hit{display:grid;grid-template-columns:42px 1fr 26px;gap:6px;padding:9px 0;border-bottom:1px dotted var(--r-line);cursor:pointer;font-size:13px;line-height:1.7;align-items:start}
+.hit:hover,.hit.on{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.hit .hp,.mark .hp{font-size:11px;color:var(--r-muted);font-variant-numeric:tabular-nums;padding-top:2px}
+.hit .hs{font-family:var(--serif);word-break:break-all}
+.hit mark{background:rgba(199,125,89,.35);color:inherit;padding:0 1px}
+.hit .hm{border:1px solid var(--r-line);background:var(--r-paper);border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:13px;line-height:1;padding:0}
+.hit .hm:hover{border-color:var(--accent);color:var(--accent-ink)}
+.mark{padding:12px 0;border-bottom:1px dotted var(--r-line);cursor:pointer}
+.mark:hover .mk-t{text-decoration:underline;text-underline-offset:3px}
+.mk-h{display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--r-muted)}
+.mk-h time{flex:1}
+.mk-t{font-family:var(--serif);font-size:14px;line-height:1.75;margin-top:4px;padding-left:10px;border-left:3px solid var(--sage)}
+.mk-n{font-size:13px;line-height:1.7;margin-top:6px;color:var(--r-muted)}
+.del{border:0;background:none;color:var(--r-muted);cursor:pointer;font-size:12px;padding:0 2px}
+.del:hover{color:var(--accent)}
 
 /* 留言 */
 .cmt-list{display:flex;flex-direction:column;margin-bottom:12px}
 .cmt{padding:12px 0;border-bottom:1px dotted var(--r-line)}
 .cmt-h{display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:5px}
-.cmt-h .av{width:22px;height:22px;background:var(--r-ink);color:var(--r-paper);font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex:none;font-family:var(--serif)}
+.cmt-h .av{width:22px;height:22px;border-radius:50%;background:var(--r-ink);color:var(--r-paper);font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex:none;font-family:var(--serif)}
 .cmt-h .em{font-weight:700;word-break:break-all;flex:1;min-width:0}
 .cmt-h time{color:var(--r-muted);white-space:nowrap;font-variant-numeric:tabular-nums}
-.cmt-h .del{border:0;background:none;color:var(--r-muted);cursor:pointer;font-size:12px;padding:0 2px}
-.cmt-h .del:hover{color:var(--accent)}
-.cmt-t{font-family:var(--serif);font-size:14px;line-height:1.8;white-space:pre-wrap;word-break:break-word;padding-left:30px}
+.cmt-t{font-family:var(--serif);font-size:14px;line-height:1.85;white-space:pre-wrap;word-break:break-word;padding-left:30px}
 .cmt-none{font-size:13px;color:var(--r-muted);font-family:var(--serif);font-style:italic}
 .cmt-me{font-size:12px;color:var(--r-muted);margin-top:6px;word-break:break-all}
-.cmt-count{background:var(--accent);color:#fff;font-size:10.5px;padding:0 6px;font-weight:700}
 
 .spinner{width:28px;height:28px;border:3px solid var(--r-line,var(--line));border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:80px auto}
 .spinner.sm{width:14px;height:14px;border-width:2px;margin:0;display:inline-block;vertical-align:-2px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loadmsg{text-align:center;color:var(--r-muted);font-size:13px;margin-top:-60px;letter-spacing:.1em}
-.err{color:var(--accent);padding:60px 24px;text-align:center;font-size:14px;line-height:1.8}
-.err .rbtn{color:var(--r-ink)}
+.err{color:var(--r-ink);padding:80px 24px;text-align:center;font-size:14.5px;line-height:1.9;font-family:var(--serif)}
+.err b{display:block;font-size:20px;margin-bottom:6px;color:var(--accent-ink)}
+.err .rbtn{color:var(--r-ink);margin-top:12px}
 
-/* ---------- 上傳 ---------- */
-.dlg{position:fixed;inset:0;background:rgba(10,10,10,.55);display:none;align-items:center;justify-content:center;z-index:15;padding:16px}
+/* ---------- 投稿 ---------- */
+.dlg{position:fixed;inset:0;background:rgba(20,22,23,.55);display:none;align-items:center;justify-content:center;z-index:15;padding:16px}
 .dlg.open{display:flex}
-.dlg-box{background:var(--paper);border:1px solid var(--rule);border-top:6px solid var(--accent);padding:26px;width:100%;max-width:460px;display:flex;flex-direction:column;gap:16px}
-.dlg-box h3{margin:0;font-family:var(--serif);font-weight:900;font-size:24px;padding-bottom:10px;border-bottom:4px double var(--rule)}
+.dlg-box{background:var(--paper);border-top:4px solid var(--accent);padding:30px;width:100%;max-width:480px;display:flex;flex-direction:column;gap:18px}
+.dlg-box h3{margin:0;font-family:var(--serif);font-weight:600;font-size:26px;padding-bottom:12px;border-bottom:1px solid var(--rule);letter-spacing:.06em}
 .dlg-box label{font-size:12px;font-weight:700;display:block;margin-bottom:6px;letter-spacing:.16em}
 .dlg-box .select{width:100%}
-.dlg-box textarea{width:100%;border:1px solid var(--rule);border-radius:0;padding:10px;font:inherit;font-size:13.5px;background:transparent;color:var(--ink);resize:vertical}
-.hint{font-size:12px;color:var(--muted);line-height:1.7}
+.dlg-box textarea{width:100%;border:1px solid var(--line);border-radius:6px;padding:10px;font:inherit;font-size:13.5px;background:transparent;color:var(--ink);resize:vertical}
+.dlg-box code{background:var(--card);padding:0 4px;border-radius:3px;font-size:11.5px}
 .dlg-actions{display:flex;justify-content:flex-end;gap:8px}
 
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--paper);padding:10px 18px;font-size:13px;opacity:0;transition:all .2s;z-index:20;pointer-events:none;max-width:90vw;border-left:4px solid var(--accent)}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--paper);padding:11px 20px;font-size:13px;opacity:0;transition:all .2s;z-index:20;pointer-events:none;max-width:90vw;border-radius:999px}
 .toast.show{opacity:1;transform:translateX(-50%)}
 
+/* ---------- 響應式 ---------- */
+@media (max-width:1020px){
+  .slices{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .feats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .feats div:nth-child(4){padding-left:0;border-left:0}
+  .feats div:nth-child(-n+3){border-bottom:1px solid var(--line)}
+  .mosaic .m-lg,.mosaic .m-md{grid-column:span 12}
+  .mosaic .m-md{padding-top:0}
+  .mosaic .m-md .cover{aspect-ratio:3/2}
+  .mosaic .m-sm{grid-column:span 6}
+  .nav-in{flex-wrap:wrap;gap:0}
+  .secs{flex:1 1 100%;order:2;border-top:1px solid var(--line)}
+  .tools{flex:1 1 100%;padding:10px 0}
+  .ctl.search{flex:1;width:auto}
+}
 @media (max-width:860px){
-  .feature{grid-template-columns:1fr;gap:18px}
-  .feature .body{order:0}
-  .feature .cover{aspect-ratio:3/2}
-  .nav-label{display:none}
-  .nav-topics{min-height:44px}
-  .ctl.search{flex:1 1 100%;order:-1}
-  .nav-sp{display:none}
-  .nav-tools .wrap{gap:8px}
-  .auth{margin-left:auto;gap:8px}
-  .ctl{padding:0 11px}
+  .wrap{padding:0 20px}
+  .mast{padding:30px 0 24px}
+  .mast-side{text-align:left}
+  .mast-side .tg br{display:none}
+  .hero,.sec-hero,.duo,.feature{grid-template-columns:1fr;gap:28px}
+  .hero{padding-top:52px;padding-bottom:56px}
+  .sec-hero{padding:44px 0 28px}
+  .feature .cover{order:-1;aspect-ratio:3/2}
+  .blk{padding-bottom:56px}
+  .mosaic{column-gap:20px}
+  .sh{flex-wrap:wrap;gap:4px 12px}
+  .sh .en{display:none}
+  .lib-teaser{padding:28px 22px}
+  .lt-f{grid-template-columns:1fr 1fr}
+  .sf-in{grid-template-columns:1fr;gap:24px}
+  .sf-en{text-align:left}
+  .manifesto{padding:36px 0 44px}
+  .mf-head{flex-wrap:wrap;gap:10px;margin-bottom:22px;border-bottom:0}
+  .mf-tabs{order:3;flex:1 1 100%;border-bottom:1px solid var(--rule)}
+  .mf-tabs button{flex:none;padding:10px 12px 12px}
+  .mf-tabs button:not(.on) .t-l{display:none}
+  .mf-ctrl{margin-left:auto}
+  .s-ask,.s-six{grid-template-columns:1fr;gap:18px}
+  .s-essay .s-side{display:block}
+  .s-essay .s-title{margin-bottom:12px}
+  .s-essay .s-title br{display:inline}
+  .five{grid-template-columns:1fr}
+  .five li,.five li+li{padding:14px 0 8px;border-left:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:44px 1fr;column-gap:8px}
+  .five .n{grid-row:1/span 3;font-size:26px}
+  .five b{margin:0 0 6px}
+  .essay{columns:auto;column-count:auto}
+  .essay-wrap:not(.open) .essay{max-height:300px;overflow:hidden;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+  .essay-more{display:inline-block}
+  .ask{font-size:14px}
+  .ask td{padding:10px 6px}
+  .ask th{padding:6px}
+  .six{grid-template-columns:repeat(2,1fr)}
+  .six li:not(:nth-child(3n+1)){padding-left:0;border-left:0}
+  .six li:nth-child(2n){padding-left:14px;border-left:1px solid var(--line)}
+  .ctl{padding:0 12px}
   .ctl-k{display:none}
   .ctl.user{padding:0 8px 0 6px}
   .ctl.user .em{display:none}
-  .mast-top span:nth-child(2){display:none}
-  .rinfo{position:absolute;right:0;top:0;bottom:0;width:min(88vw,340px);box-shadow:-10px 0 30px rgba(0,0,0,.25);z-index:2}
+  .util-in span:nth-child(2){display:none}
+  .cat thead{display:none}
+  .cat tr{display:grid;grid-template-columns:1fr auto;gap:6px 12px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .cat td{padding:0;border:0}
+  .cat .ct{grid-column:1/-1}
+  .cat .c-sec,.cat .c-link,.cat .c-size{display:none}
+  .rinfo{position:absolute;right:0;top:0;bottom:0;width:min(92vw,360px);box-shadow:-10px 0 30px rgba(0,0,0,.25);z-index:2}
   .hide-sm{display:none}
+  .rbar{gap:6px;padding:8px 10px}
+  .rbtn{padding:5px 9px}
+  .rtitle{flex:1 1 100%;order:-1;min-width:0}
+  .rtitle .tag{display:none}
+}
+@media (max-width:560px){
+  .slices{grid-template-columns:1fr}
+  .mosaic{grid-template-columns:minmax(0,1fr);gap:44px}
+  .mosaic .m-lg,.mosaic .m-md,.mosaic .m-sm{grid-column:auto}
+  .mosaic .m-lg .title{font-size:23px}
+  .feats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .feats div{padding:16px 10px 16px 0!important;border-left:0!important;border-bottom:1px solid var(--line)}
+  .feats div:nth-child(2n){padding-left:12px!important;border-left:1px solid var(--line)!important}
+  .lt-f{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<header class="masthead">
-  <div class="wrap">
-    <div class="mast-top">
-      <span id="today"></span>
-      <span>SOCIAL ISSUES REVIEW</span>
-      <span>收錄 <b id="stArticles">—</b> 篇・<b id="stTopics">—</b> 個議題・更新於 <b id="stLatest">—</b></span>
+<div class="util">
+  <div class="wrap util-in">
+    <span id="today"></span>
+    <span>INDEPENDENT · CURIOUS · THOUGHTFUL</span>
+    <span>收錄 <b id="stArticles">—</b> 篇・更新於 <b id="stLatest">—</b><span class="demo" id="demoBadge" hidden>示範資料</span></span>
+  </div>
+</div>
+
+<header class="mast">
+  <div class="wrap mast-in">
+    <a class="brand" id="home" href="#" aria-label="另一面 首頁">
+      <svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M22.5 6a18 18 0 0 0 0 36z" fill="currentColor"/><path d="M25.5 6a18 18 0 0 1 0 36" fill="none" stroke="var(--accent)" stroke-width="2"/></svg>
+      <span class="bn">另一面</span>
+    </a>
+    <div class="mast-side">
+      <span class="en">The Other Side</span>
+      <span class="tg">每件事情都有不同面貌，<br>表面之下，可能藏著另一種解釋。</span>
     </div>
-    <p class="mast-title" id="home">把複雜的社會議題攤開來，慢慢讀、好好想。</p>
-    <p class="mast-tag">「一個社會真正的問題，往往不是缺乏資源，而是制度如何分配資源、權力如何承擔責任，以及人們是否具備糾正錯誤的能力。」</p>
-    <hr class="mast-rule">
   </div>
 </header>
 
-<nav class="navbar">
-  <div class="wrap nav-topics">
-    <span class="nav-label">議題</span>
-    <div class="topics" id="topics"></div>
-  </div>
-  <div class="nav-tools">
-    <div class="wrap">
+<nav class="nav" id="nav">
+  <div class="wrap nav-in">
+    <div class="secs" id="secs"></div>
+    <div class="tools">
       <label class="ctl search" title="搜尋">
         <span class="ico" aria-hidden="true">⌕</span>
-        <input id="q" type="search" placeholder="搜尋標題、摘要、議題">
+        <input id="q" type="search" placeholder="搜尋文章、議題、資料">
       </label>
-      <label class="ctl sort" title="排序">
-        <span class="ctl-k">排序</span>
-        <select id="sort">
-          <option value="new">最新</option>
-          <option value="old">最早</option>
-          <option value="title">標題</option>
-        </select>
-      </label>
-      <span class="nav-sp"></span>
       <button class="ctl ctl-btn primary" id="uploadBtn" hidden>＋ 投稿</button>
       <div class="auth" id="authBox"></div>
     </div>
   </div>
 </nav>
 
-<main class="wrap">
-  <p class="status" id="status">載入中…</p>
-  <div id="list"></div>
+<main id="main">
+  <!-- 首頁 -->
+  <div id="viewHome">
+    <section class="hero wrap">
+      <div>
+        <p class="kick">Brand Philosophy</p>
+        <h2>讓思考，<br>成為一種<em>生活方式</em>。</h2>
+      </div>
+      <div class="hero-r">
+        <p>從日常現象出發，探索世界的不同面貌。理解事情的來龍去脈，也保留重新思考的自由。</p>
+        <ul class="traits">
+          <li><b>知性</b><span>有深度、有邏輯、有事實依據。</span></li>
+          <li><b>親切</b><span>不說教、不賣弄專業、不製造距離感。</span></li>
+          <li><b>獨立</b><span>不受單一政治立場或主流敘事限制。</span></li>
+        </ul>
+        <div class="values">INDEPENDENT · CURIOUS · THOUGHTFUL</div>
+      </div>
+    </section>
+
+    <div class="wrap" id="homeTop"></div>
+
+    <section class="manifesto" id="mf" aria-roledescription="carousel" aria-label="編輯室手記">
+      <div class="wrap">
+        <div class="mf-head">
+          <span class="mf-kicker">Editor's Notes・編輯室手記</span>
+          <div class="mf-tabs" id="mfTabs" role="tablist">
+            <button role="tab" data-i="0"><span class="t-n">01</span><span class="t-l">五個思考原則</span><i></i></button>
+            <button role="tab" data-i="1"><span class="t-n">02</span><span class="t-l">理性思考宣言</span><i></i></button>
+            <button role="tab" data-i="2"><span class="t-n">03</span><span class="t-l">如何讓別人願意聽</span><i></i></button>
+            <button role="tab" data-i="3"><span class="t-n">04</span><span class="t-l">理性思辨六原則</span><i></i></button>
+          </div>
+          <div class="mf-ctrl">
+            <button class="rot-arrow" id="rotPrev" aria-label="上一則">←</button>
+            <button class="rot-arrow" id="rotNext" aria-label="下一則">→</button>
+            <button class="rot-arrow rot-pause" id="rotPause" aria-label="暫停輪播" title="暫停 / 繼續">❚❚</button>
+          </div>
+        </div>
+
+        <div class="rot" id="rot" aria-live="off">
+
+          <section class="rot-slide s-five" data-dur="14000" role="tabpanel" aria-label="五個值得傳達的思考原則">
+            <h2 class="s-title">五個值得傳達的思考原則</h2>
+            <ol class="five">
+              <li><span class="n">01</span><b>批判事情，而不是先批判立場</b><p>不要因為一個人支持某個政黨、政策或人物，就直接否定他的觀點。</p><p>應該先問：他的論點是否有證據？推論是否合理？</p></li>
+              <li><span class="n">02</span><b>區分事實、觀點與情緒</b><p>事實是可以驗證的資訊，觀點是對事實的解釋，情緒則是個人對事件的感受。</p><p>三者可以同時存在，但不能互相取代。</p></li>
+              <li><span class="n">03</span><b>不要只問誰做錯，也要問制度為什麼容許錯誤發生</b><p>個人責任固然重要，但如果相同問題不斷重複，就必須檢查制度設計、監督機制及誘因。</p></li>
+              <li><span class="n">04</span><b>接受自己可能是錯的</b><p>真正的理性不是永遠正確，而是發現證據不足或判斷錯誤時，有能力修正自己的認知。</p></li>
+              <li><span class="n">05</span><b>提出批判，也要提出解決方向</b><p>如果只是不斷指出問題，卻不願意討論改善方法，批判就很難轉化成真正的社會進步。</p></li>
+            </ol>
+          </section>
+
+          <section class="rot-slide s-essay" data-dur="20000" role="tabpanel" aria-label="理性思考，不是為了證明自己正確">
+            <div class="s-side">
+              <h2 class="s-title big">理性思考，<br>不是為了證明自己正確</h2>
+              <p class="pull">批判不應該是為了否定別人，而是為了讓事情變得更好。</p>
+            </div>
+            <div class="essay-wrap">
+              <div class="essay">
+                <p>我們生活在一個資訊非常豐富，卻不一定願意理解彼此的時代。</p>
+                <p>人們經常因為不同的政治立場、價值觀或利益關係，而急著否定對方的觀點。</p>
+                <p>但我始終認為，討論一件事情，不應該只是為了證明自己是對的，更不應該只是為了找出誰是壞人。</p>
+                <p>真正值得思考的是：</p>
+                <ul>
+                  <li>我們討論的事情，有沒有足夠的事實與證據？</li>
+                  <li>我們所相信的觀點，是否經得起不同角度的檢驗？</li>
+                  <li>當一件事情出現問題時，我們是否只關注個人的錯誤，卻忽略了制度本身的缺陷？</li>
+                  <li>當事實與自己的立場產生衝突時，我們是否願意重新思考？</li>
+                  <li>除了指出問題，我們是否願意進一步尋找解決方案？</li>
+                </ul>
+                <p class="em">批判不應該是為了否定別人，而是為了讓事情變得更好。</p>
+                <p>支持一個人，不代表必須認同他的所有決策。</p>
+                <p>反對一項政策，也不代表必須否定它所有可能的價值。</p>
+                <p>承認別人做對的事情，不會降低自己的立場；承認自己犯錯，也不代表失去尊嚴。</p>
+                <p>我們應該保留質疑的能力，也應該保留修正自己的勇氣。</p>
+                <p>因為真正成熟的思考，不是永遠站在某一邊，而是無論站在哪一邊，都願意接受事實的檢驗。</p>
+                <p>我們不需要每個人都有相同的立場，但至少應該擁有共同追求事實、尊重證據及承擔責任的能力。</p>
+                <p class="em">這才是理性討論真正的價值。</p>
+              </div>
+              <button class="essay-more" id="essayMore" aria-expanded="false">展開全文 ↓</button>
+            </div>
+          </section>
+
+          <section class="rot-slide s-ask" data-dur="16000" role="tabpanel" aria-label="如何讓別人願意聽">
+            <div class="s-side">
+              <h2 class="s-title big">但有一個更重要的問題：<br>如何讓別人願意聽？</h2>
+              <div class="ask-intro">
+                <p>這裡我想提出一個比較現實的觀察。</p>
+                <p>你不能期待每個人都願意接受理性討論。</p>
+                <p>尤其當議題涉及政治認同、個人利益、宗教信仰或長期建立的價值觀時，人們可能會把對觀點的質疑，理解成對自我的攻擊。</p>
+                <p>所以我不建議你直接告訴別人：<b>「你應該理性一點。」</b>這句話很容易讓對方產生防衛心理。你可以改成：</p>
+              </div>
+            </div>
+            <div>
+              <table class="ask">
+                <thead><tr><th>不建議這樣說</th><th>可以改成這樣問</th></tr></thead>
+                <tbody>
+                  <tr><td>你根本不理性</td><td>有沒有其他角度可以解釋？</td></tr>
+                  <tr><td>你就是在護航</td><td>如果換成另一個政黨，你也會接受嗎？</td></tr>
+                  <tr><td>你根本不懂</td><td>我們要不要先確認一下事實？</td></tr>
+                  <tr><td>你就是不願意認錯</td><td>如果有新的證據，你會願意重新評估嗎？</td></tr>
+                  <tr><td>你只會批判</td><td>除了指出問題，有沒有更好的解決方案？</td></tr>
+                </tbody>
+              </table>
+              <p class="ask-key">這裡的關鍵是：不要急著改變別人的答案，先讓他重新檢查得出答案的過程。</p>
+            </div>
+          </section>
+
+          <section class="rot-slide s-six" data-dur="12000" role="tabpanel" aria-label="Thomas 理性思辨六原則">
+            <div class="s-side">
+              <h2 class="s-title big">Thomas<br>理性思辨六原則</h2>
+              <p class="s-en">A Framework for Critical Thinking</p>
+            </div>
+            <ol class="six">
+              <li><span class="n">01</span><b>事實優先</b><p>所有主張都應該接受證據檢驗。</p></li>
+              <li><span class="n">02</span><b>立場獨立</b><p>不因為認同某個人，就放棄質疑他的權利。</p></li>
+              <li><span class="n">03</span><b>多元視角</b><p>理解不同立場背後的原因與利益。</p></li>
+              <li><span class="n">04</span><b>因果分析</b><p>不只看結果，更要理解形成結果的機制。</p></li>
+              <li><span class="n">05</span><b>責任對等</b><p>權力、決策與責任應該相互對應。</p></li>
+              <li><span class="n">06</span><b>持續修正</b><p>願意接受新證據，並修正原有判斷。</p></li>
+            </ol>
+          </section>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 切片／閱覽室／搜尋 -->
+  <div id="viewList" class="wrap" hidden></div>
 </main>
 
+<footer class="site-foot">
+  <div class="wrap sf-in">
+    <div>
+      <a class="brand" data-go="home" href="#"><svg class="mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M22.5 6a18 18 0 0 0 0 36z" fill="currentColor"/><path d="M25.5 6a18 18 0 0 1 0 36" fill="none" stroke="var(--accent)" stroke-width="2.5"/></svg><span class="bn">另一面</span></a>
+      <p>讓思考，成為一種生活方式。<br>從日常現象出發，探索世界的不同面貌。</p>
+    </div>
+    <div class="sf-nav" id="footNav"></div>
+    <div class="sf-en">INDEPENDENT<br>CURIOUS<br>THOUGHTFUL<br>© <span id="yr"></span> The Other Side</div>
+  </div>
+</footer>
+
 <!-- 閱讀器 -->
-<div class="reader" id="reader">
+<div class="reader" id="reader" data-mode="plain">
   <div class="rbar">
-    <button class="rbtn" id="rClose">← 返回</button>
+    <button class="rbtn" id="rClose">← <span class="hide-sm">返回</span></button>
     <div class="rtitle"><span class="tag" id="rTag"></span><b id="rTitle"></b></div>
     <span class="rpage" id="rPage"></span>
-    <button class="rbtn" id="zOut" title="縮小（-）">A−</button>
-    <button class="rbtn" id="zIn" title="放大（+）">A＋</button>
-    <button class="rbtn" id="dlBtn" title="下載檔案">⤓ <span class="hide-sm">下載 PDF</span></button>
-    <button class="rbtn" id="infoBtn" title="文章資訊與留言">💬 <span class="cmt-count" id="rCmtN">0</span></button>
+    <div class="rgrp" id="rPanelBtns">
+      <button class="rbtn" data-panel="toc" title="章節目錄">☰ <span class="hide-sm">目錄</span></button>
+      <button class="rbtn" data-panel="find" title="全文搜尋（/）">⌕ <span class="hide-sm">搜尋</span></button>
+      <button class="rbtn" data-panel="marks" title="我的標記">✎ <span class="hide-sm">標記</span><span class="cnt" id="rMarkN"></span></button>
+      <button class="rbtn" data-panel="cmt" title="留言">💬<span class="cnt" id="rCmtN"></span></button>
+      <button class="rbtn" data-panel="info" title="文章資訊">ⓘ</button>
+    </div>
+    <div class="rgrp">
+      <button class="rbtn" id="zOut" title="縮小（-）">A−</button>
+      <button class="rbtn" id="zIn" title="放大（+）">A＋</button>
+      <button class="rbtn" id="modeBtn" title="切換閱讀模式">◐ <span class="hide-sm" id="modeLbl">原色</span></button>
+      <button class="rbtn" id="dlBtn" title="下載檔案">⤓</button>
+    </div>
     <div class="rprog"><i id="rProg"></i></div>
   </div>
   <div class="rmain">
     <div class="rbody" id="rbody"></div>
     <aside class="rinfo" id="rinfo">
-      <div>
-        <span class="tag" id="iTag"></span>
-        <h2 id="iTitle"></h2>
+      <div class="rtabs" id="rtabs">
+        <button data-p="info">資訊</button><button data-p="toc">目錄</button><button data-p="find">搜尋</button><button data-p="marks">標記</button><button data-p="cmt">留言</button>
       </div>
-      <dl>
-        <dt>議題</dt><dd id="iFolder"></dd>
-        <dt>更新</dt><dd id="iDate"></dd>
-        <dt>篇幅</dt><dd id="iLen"></dd>
-        <dt>檔案</dt><dd id="iFile"></dd>
-      </dl>
-      <div>
-        <div class="sec-l">摘要 <button id="editDesc" hidden>編輯</button></div>
-        <div class="summary" id="iDesc"></div>
-        <div id="descEdit" hidden>
-          <textarea id="desc" rows="6" placeholder="用幾句話寫下這篇文章的重點（會寫入雲端硬碟「說明」欄位，也能被搜尋）"></textarea>
-          <div class="row">
-            <button class="rbtn on" id="saveDesc">儲存</button>
-            <button class="rbtn" id="cancelDesc">取消</button>
+
+      <section class="rpanel" data-p="info">
+        <div>
+          <span class="tag" id="iTag"></span>
+          <h2 id="iTitle"></h2>
+        </div>
+        <dl>
+          <dt>切片</dt><dd id="iFolder"></dd>
+          <dt>類型</dt><dd id="iKind"></dd>
+          <dt>更新</dt><dd id="iDate"></dd>
+          <dt>篇幅</dt><dd id="iLen"></dd>
+          <dt>檔案</dt><dd id="iFile"></dd>
+        </dl>
+        <div>
+          <div class="sec-l">摘要 <button id="editDesc" hidden>編輯</button></div>
+          <div class="summary" id="iDesc"></div>
+          <div id="descEdit" hidden>
+            <textarea id="desc" rows="6" placeholder="用幾句話寫下這篇文章的重點（會寫入雲端硬碟「說明」欄位，也能被搜尋）"></textarea>
+            <p class="hint" style="margin-top:6px">小技巧：加入【原始資料：檔名】可連結到閱覽室的資料；加入【精選】可放上首頁精選。</p>
+            <div class="row">
+              <button class="rbtn on" id="saveDesc">儲存</button>
+              <button class="rbtn" id="cancelDesc">取消</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="row"><button class="rbtn on" id="dlBtn2">⤓ 下載 PDF</button></div>
-      <div>
-        <div class="sec-l">留言 <span id="cmtN"></span></div>
-        <div class="cmt-list" id="cmtList"></div>
-        <textarea id="cmtText" rows="3" maxlength="1000" placeholder="分享你的想法或補充資料…（會顯示你的 E-mail）"></textarea>
-        <div class="row"><button class="rbtn on" id="cmtSend">送出留言</button></div>
-        <div class="cmt-me" id="cmtMe"></div>
-        <div class="cmt-signin" id="cmtSignin"></div>
-      </div>
-      <div id="nextBox"></div>
+        <div id="relBox"></div>
+        <div class="row"><button class="rbtn on" id="dlBtn2">⤓ 下載 PDF</button></div>
+        <div id="nextBox"></div>
+      </section>
+
+      <section class="rpanel" data-p="toc">
+        <div>
+          <div class="sec-l">章節目錄</div>
+          <div id="tocBox"></div>
+        </div>
+        <div>
+          <div class="sec-l">快速跳轉</div>
+          <div class="jump"><input id="jumpIn" type="number" min="1" placeholder="頁碼"><button class="rbtn on" id="jumpBtn">前往</button><span class="hint" id="jumpOf"></span></div>
+        </div>
+      </section>
+
+      <section class="rpanel" data-p="find">
+        <div>
+          <div class="sec-l">全文搜尋</div>
+          <form class="findf" id="findForm"><input id="fq" type="search" placeholder="輸入關鍵字，搜尋整份文件"><button class="rbtn on">搜尋</button></form>
+        </div>
+        <div class="fnav" id="fNav" hidden><button class="rbtn" id="fPrev" title="上一個">↑</button><span id="fPos"></span><button class="rbtn" id="fNext" title="下一個">↓</button></div>
+        <div class="fres" id="fRes"></div>
+      </section>
+
+      <section class="rpanel" data-p="marks">
+        <div>
+          <div class="sec-l">重點標記</div>
+          <textarea id="markNote" rows="2" placeholder="寫一句筆記（選填）"></textarea>
+          <div class="row"><button class="rbtn on" id="markPage">＋ 標記目前頁面</button></div>
+          <p class="hint" style="margin-top:10px">也可以在「搜尋」結果按 ＋，把找到的段落加入標記，頁面上會以綠色標示。標記只儲存在這台裝置的瀏覽器。</p>
+        </div>
+        <div id="markList"></div>
+      </section>
+
+      <section class="rpanel" data-p="cmt">
+        <div>
+          <div class="sec-l">留言 <span id="cmtN"></span></div>
+          <div class="cmt-list" id="cmtList"></div>
+          <textarea id="cmtText" rows="3" maxlength="1000" placeholder="分享你的想法或補充資料…（會顯示你的 E-mail）"></textarea>
+          <div class="row"><button class="rbtn on" id="cmtSend">送出留言</button></div>
+          <div class="cmt-me" id="cmtMe"></div>
+          <div class="cmt-signin" id="cmtSignin"></div>
+        </div>
+      </section>
     </aside>
   </div>
 </div>
 
-<!-- 上傳 -->
+<!-- 投稿 -->
 <div class="dlg" id="upDlg">
   <div class="dlg-box">
     <h3>投稿文章</h3>
     <div>
-      <label for="upTarget">放進哪個議題</label>
+      <label for="upTarget">放進哪個切片</label>
       <select id="upTarget" class="select"></select>
     </div>
     <div>
       <label for="upDesc">摘要（選填）</label>
       <textarea id="upDesc" rows="3" placeholder="簡短說明這篇文章在談什麼，會顯示在卡片上"></textarea>
     </div>
-    <div class="hint">支援 PDF、PNG、JPG，可一次選多個檔案，單檔上限 20MB。檔名會直接當作文章標題，建議先改好再上傳。</div>
+    <div class="hint">支援 PDF、PNG、JPG，可一次選多個檔案，單檔上限 20MB。檔名會直接當作文章標題。<br>摘要中加入 <code>【原始資料：檔名】</code> 可連結閱覽室資料，加入 <code>【精選】</code> 會放上首頁精選。</div>
     <div class="dlg-actions">
       <button class="btn" id="upCancel">取消</button>
       <button class="btn primary" id="upPick">選擇檔案…</button>
@@ -348,6 +839,7 @@ button{font:inherit;color:inherit}
 <script>
 /* ======================================================
  *  設定：部署前請填這兩項（說明見 README.md）
+ *  未填寫時，網站會以「示範資料」顯示版面。
  * ====================================================== */
 const CONFIG = {
   // Apps Script 部署後的網頁應用程式網址（/exec 結尾）
@@ -356,20 +848,47 @@ const CONFIG = {
   GOOGLE_CLIENT_ID: '272290346430-6shqhed6sp2sn17efjscbdkv4tmqhgku.apps.googleusercontent.com'
 };
 
+/* ======================================================
+ *  六大區域：雲端硬碟的第一層資料夾會依名稱歸入切片
+ *  ・資料夾名稱「等於」切片名稱（例如「經濟切片」）最直接
+ *  ・或名稱包含 match 中的任一關鍵字（例如「房地產」→ 經濟切片）
+ *  ・都不符合的會歸到「其他」，仍會出現在首頁、搜尋與閱覽室
+ * ====================================================== */
+const SECTIONS = [
+  { key: 'society', n: '01', name: '社會切片', en: 'Society', c: '#C77D59', ci: '#A35C3A',
+    desc: '政治、治理與公共政策。看見制度如何塑造每個人的日常。', sub: '政治・治理・公共政策',
+    match: ['社會', '政治', '治理', '公共政策', '政策', '選舉', '司法', '教育', '媒體', '勞動', '人口'] },
+  { key: 'economy', n: '02', name: '經濟切片', en: 'Economy', c: '#647B83', ci: '#4E636B',
+    desc: '金融、房地產與財政。理解數字背後的誘因與取捨。', sub: '金融・房地產・財政',
+    match: ['經濟', '金融', '房地產', '房市', '住宅', '財政', '稅', '產業', '能源', '貿易'] },
+  { key: 'history', n: '03', name: '歷史切片', en: 'History', c: '#9AA38D', ci: '#5F6A52',
+    desc: '台灣史、世界史與文明。從來處，理解現在。', sub: '台灣史・世界史・文明',
+    match: ['歷史', '台灣史', '臺灣史', '世界史', '文明', '史學'] },
+  { key: 'thought', n: '04', name: '思想切片', en: 'Ideas', c: '#B9A27E', ci: '#7A6544',
+    desc: '人性、哲學與心理。替每一個判斷，留一點重新思考的餘地。', sub: '人性・哲學・心理',
+    match: ['思想', '哲學', '心理', '人性', '倫理', '思辨'] },
+  { key: 'library', n: '05', name: '資料閱覽室', en: 'Reading Room', c: '#7D8486', ci: '#3B4245',
+    desc: 'PDF、報告與數據資料。把研究文章與原始資料放在一起讀。', sub: 'PDF・報告・數據資料',
+    match: ['資料', '報告', '數據', '原始資料', '文獻', '閱覽室'] }
+];
+const VIEWS = ['home', ...SECTIONS.map(s => s.key)];
+
 const WORKER_URL = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 const MAX = 20 * 1024 * 1024;
-const PALETTE = ['#c8102e', '#1d4e89', '#2f6b3a', '#9a6200', '#5b3a8c', '#0e6e6e', '#a33b62', '#6b4f2a'];
 const $ = s => document.querySelector(s);
 const state = {
-  files: [], folders: [], topic: '__all__', q: '', sort: 'new',
-  cur: null, token: 0, layout: 0,
-  pdf: null, data: null, zoom: 1, imgZoom: 1, pageEls: null, me: null, comments: []
+  files: [], folders: [], view: 'home', sub: 'all', q: '', sort: 'new', libType: 'all', libSec: 'all',
+  demo: false, loadErr: '', refsOut: new Map(), refsIn: new Map(),
+  cur: null, token: 0, layout: 0, panel: 'info', curPage: 1,
+  pdf: null, data: null, zoom: 1, imgZoom: 1, pageEls: null, me: null, comments: [],
+  texts: {}, hits: [], hitCur: -1, findTok: 0, marks: [], toc: []
 };
 
 /* ---------- 小工具 ---------- */
+function apiOk() { return CONFIG.API_URL && !CONFIG.API_URL.startsWith('請'); }
 /** 呼叫後端 API（Apps Script）。以 text/plain 送出可避開 CORS 預檢 */
 async function run(fn, ...args) {
-  if (!CONFIG.API_URL || CONFIG.API_URL.startsWith('請')) throw new Error('尚未在 index.html 設定 API_URL');
+  if (!apiOk()) throw new Error('尚未在 index.html 設定 API_URL');
   if (auth.token && auth.exp < Date.now() + 30000) clearAuth(true);   // 憑證快過期就不送
   let res;
   try {
@@ -402,134 +921,290 @@ function isPdf(f) { return f.mimeType === 'application/pdf'; }
 function titleOf(f) { return f.name.replace(/\.(pdf|png|jpe?g)$/i, '').replace(/[_]+/g, ' ').trim(); }
 function topicOf(f) { return f.folder ? f.folder.split(' / ')[0] : '未分類'; }
 function subOf(f) { const p = f.folder ? f.folder.split(' / ') : []; return p.slice(1).join(' / '); }
-function colorOf(topic) {
-  if (topic === '未分類') return '#8b93a1';
-  let h = 0; for (const ch of topic) h = (h * 31 + ch.codePointAt(0)) >>> 0;
-  return PALETTE[h % PALETTE.length];
+const secCache = new Map();
+function secOfTopic(t) {
+  if (secCache.has(t)) return secCache.get(t);
+  const s = SECTIONS.find(x => x.name === t) || SECTIONS.find(x => x.match.some(k => t.includes(k))) || null;
+  secCache.set(t, s); return s;
 }
-function excerptOf(f) { return f.description.replace(/【[^】]*】/g, '').replace(/\s+/g, ' ').trim(); }
+function secOf(f) { return secOfTopic(topicOf(f)); }
+function secByKey(k) { return SECTIONS.find(s => s.key === k); }
+function subLabel(f) {
+  const t = topicOf(f), s = secOf(f);
+  if (s && t === s.name) return subOf(f).split(' / ')[0] || '';
+  return t === '未分類' ? '' : t;
+}
+function isSource(f) { const s = secOf(f); return !!s && s.key === 'library'; }
+function isFeatured(f) { return /【\s*精選\s*】/.test(f.description || ''); }
+function vars(f) { const s = secOf(f); return s ? `--c:${s.c};--ci:${s.ci}` : '--c:#B5AC9C;--ci:#5F5B53'; }
+function excerptOf(f) { return (f.description || '').replace(/【[^】]*】/g, '').replace(/\s+/g, ' ').trim(); }
+function byNew(a, b) { return b.updated.localeCompare(a.updated); }
+function sorted(list, how) {
+  list = list.slice();
+  if (how === 'old') list.sort((a, b) => a.updated.localeCompare(b.updated));
+  else if (how === 'title') list.sort((a, b) => titleOf(a).localeCompare(titleOf(b), 'zh-Hant'));
+  else list.sort(byNew);
+  return list;
+}
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2600); }
 function errMsg(e) { return (e && e.message) || String(e); }
 function store(k, v) { try { v === undefined ? (v = localStorage.getItem(k)) : v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) { v = null; } return v; }
 
+/* ---------- 文章與原始資料的互相連結 ----------
+ * 摘要中寫【原始資料：檔名】或【相關：檔名、檔名】即建立連結，系統會自動反向列出「被引用於」。 */
+function refNames(f) {
+  const out = [], re = /【\s*(?:原始資料|相關資料|相關文章|相關|參考資料|參考)\s*[：:]\s*([^】]+)】/g;
+  let m; while ((m = re.exec(f.description || ''))) m[1].split(/[、,，;；|]/).forEach(s => { s = s.trim(); if (s) out.push(s); });
+  return out;
+}
+function findByName(n) {
+  const k = n.replace(/\.(pdf|png|jpe?g)$/i, '').toLowerCase();
+  return state.files.find(x => x.id === n) || state.files.find(x => titleOf(x).toLowerCase() === k) ||
+         state.files.find(x => titleOf(x).toLowerCase().includes(k));
+}
+function buildRefs() {
+  state.refsOut = new Map(); state.refsIn = new Map();
+  state.files.forEach(f => {
+    const outs = [...new Set(refNames(f).map(findByName).filter(x => x && x !== f))];
+    state.refsOut.set(f.id, outs);
+    outs.forEach(t => { if (!state.refsIn.has(t.id)) state.refsIn.set(t.id, []); state.refsIn.get(t.id).push(f); });
+  });
+}
+function linkCount(f) { return (state.refsOut.get(f.id) || []).length + (state.refsIn.get(f.id) || []).length; }
+
 /* ---------- 載入列表 ---------- */
 function load() {
-  $('#status').textContent = '載入中…';
+  state.loadErr = '';
+  if (!apiOk()) {                         // 尚未連上後端：以示範資料預覽版面
+    const d = demoData(); state.demo = true; state.files = d.files; state.folders = d.folders;
+    $('#demoBadge').hidden = false;
+    afterLoad(); return Promise.resolve();
+  }
   return run('listAll').then(data => {
-    state.files = data.files;
-    state.folders = data.folders;
-    renderStats(); renderTopics(); renderUploadTargets(); render();
-  }).catch(e => { $('#status').textContent = '載入失敗：' + errMsg(e); });
+    state.files = data.files; state.folders = data.folders; afterLoad();
+  }).catch(e => { state.loadErr = errMsg(e); render(); });
 }
-
-function topicList() {
-  const m = new Map();
-  state.files.forEach(f => { const t = topicOf(f); m.set(t, (m.get(t) || 0) + 1); });
-  // 也列出還沒有文章的議題資料夾
-  state.folders.filter(x => x.depth === 1).forEach(x => { if (!m.has(x.path)) m.set(x.path, 0); });
-  return [...m.entries()].sort((a, b) => a[0] === '未分類' ? 1 : b[0] === '未分類' ? -1 : a[0].localeCompare(b[0], 'zh-Hant'));
-}
+function afterLoad() { secCache.clear(); buildRefs(); renderStats(); renderNav(); renderUploadTargets(); render(); }
 
 function renderStats() {
   $('#stArticles').textContent = state.files.length;
-  $('#stTopics').textContent = topicList().filter(([t, n]) => t !== '未分類' && n).length;
-  $('#stLatest').textContent = state.files.length ? relDate(state.files[0].updated) : '—';
+  const latest = state.files.reduce((m, f) => !m || f.updated > m ? f.updated : m, '');
+  $('#stLatest').textContent = latest ? relDate(latest) : '—';
 }
-
-function renderTopics() {
-  const list = topicList();
-  if (state.topic !== '__all__' && !list.some(([t]) => t === state.topic)) state.topic = '__all__';
-  $('#topics').innerHTML =
-    `<button class="topic${state.topic === '__all__' ? ' on' : ''}" data-t="__all__">全部 <small>${state.files.length}</small></button>` +
-    list.filter(([, n]) => n).map(([t, n]) =>
-      `<button class="topic${state.topic === t ? ' on' : ''}" data-t="${esc(t)}" style="--c:${colorOf(t)}"><i></i>${esc(t)} <small>${n}</small></button>`).join('');
+function sectionCounts() {
+  const m = {}; state.files.forEach(f => { const s = secOf(f); if (s) m[s.key] = (m[s.key] || 0) + 1; }); return m;
 }
-
+function renderNav() {
+  const n = sectionCounts();
+  $('#secs').innerHTML =
+    `<button class="nv${state.view === 'home' && !state.q ? ' on' : ''}" data-go="home">首頁</button>` +
+    SECTIONS.map(s => `<button class="nv${state.view === s.key && !state.q ? ' on' : ''}" data-go="${s.key}" style="--c:${s.c}">${s.name}<small>${n[s.key] || 0}</small></button>`).join('');
+  $('#footNav').innerHTML = `<button data-go="home">首頁</button>` + SECTIONS.map(s => `<button data-go="${s.key}">${s.name}</button>`).join('');
+}
 function renderUploadTargets() {
   $('#upTarget').innerHTML = state.folders.map(fd =>
     `<option value="${fd.id}">${fd.path ? '　'.repeat(fd.depth - 1) + esc(fd.path.split(' / ').pop()) : '（未分類）'}</option>`).join('');
 }
 
-function filtered() {
-  const q = state.q.trim().toLowerCase();
-  const list = state.files.filter(f => {
-    if (state.topic !== '__all__' && topicOf(f) !== state.topic) return false;
-    if (!q) return true;
-    return (f.name + ' ' + f.description + ' ' + f.folder).toLowerCase().includes(q);
-  });
-  if (state.sort === 'old') list.sort((a, b) => a.updated.localeCompare(b.updated));
-  else if (state.sort === 'title') list.sort((a, b) => titleOf(a).localeCompare(titleOf(b), 'zh-Hant'));
-  else list.sort((a, b) => b.updated.localeCompare(a.updated));
-  return list;
-}
-
-function metaHtml(f) {
-  const t = topicOf(f), sub = subOf(f);
-  return `<span class="tag">${esc(t)}${sub ? `<span class="subp">／${esc(sub)}</span>` : ''}</span>`;
+/* ---------- 卡片 ---------- */
+function tagHtml(f) {
+  const s = secOf(f), sub = subLabel(f);
+  return `<span class="tag">${s ? esc(s.name) : '其他'}${sub ? `<span class="subp">・${esc(sub)}</span>` : ''}</span>`;
 }
 function excerptHtml(f) {
   const ex = excerptOf(f);
   return ex ? `<p class="excerpt">${esc(ex)}</p>` : `<p class="excerpt none">尚未撰寫摘要</p>`;
 }
 function footHtml(f) {
-  return `<div class="foot"><span>${fmtDate(f.updated)}</span><span class="type">${isPdf(f) ? 'PDF' : '圖片'}</span><span>${fmtSize(f.size)}</span>${f.comments ? `<span>💬 ${f.comments}</span>` : ''}</div>`;
+  return `<div class="foot"><span>${fmtDate(f.updated)}</span><span class="type">${isPdf(f) ? 'PDF' : '圖片'}</span><span>${fmtSize(f.size)}</span>` +
+    `${isSource(f) ? '<span class="src">原始資料</span>' : ''}${f.comments ? `<span>💬 ${f.comments}</span>` : ''}</div>`;
 }
-
-function cardHtml(f) {
+function cardHtml(f, cls) {
   return `
-    <article class="card" data-id="${f.id}" style="--c:${colorOf(topicOf(f))}">
+    <article class="card ${cls || ''}" data-id="${f.id}" style="${vars(f)}">
       <div class="cover" data-thumb="${f.id}">${thumbInner(f)}</div>
-      <div class="body">
-        ${metaHtml(f)}
-        <h3 class="title">${esc(titleOf(f))}</h3>
-        ${excerptHtml(f)}
-        ${footHtml(f)}
-      </div>
+      <div class="body">${tagHtml(f)}<h3 class="title">${esc(titleOf(f))}</h3>${excerptHtml(f)}${footHtml(f)}</div>
     </article>`;
 }
 function featureHtml(f) {
   return `
-    <article class="feature" data-id="${f.id}" style="--c:${colorOf(topicOf(f))}">
-      <div class="cover" data-thumb="${f.id}">${thumbInner(f)}</div>
+    <article class="feature" data-id="${f.id}" style="${vars(f)}">
       <div class="body">
-        <span class="label-new">頭條</span>
-        ${metaHtml(f)}
+        <span class="label-new">${isFeatured(f) ? 'Editor’s Pick・精選' : 'Latest・本期焦點'}</span>
+        ${tagHtml(f)}
         <h2 class="title">${esc(titleOf(f))}</h2>
         ${excerptHtml(f)}
         ${footHtml(f)}
         <span class="btn read">閱讀全文 →</span>
       </div>
+      <div class="cover" data-thumb="${f.id}">${thumbInner(f)}</div>
     </article>`;
 }
+function sh(no, zh, en, go) {
+  return `<div class="sh"><span class="no">${no}</span><h3>${zh}</h3><span class="en">${en}</span>${go ? `<button class="more" data-go="${go}">查看全部 →</button>` : ''}</div>`;
+}
+const LIB_FEATS = [
+  ['PDF 線上閱讀', '不必下載，直接連續捲動閱讀。'],
+  ['章節目錄', '讀取 PDF 書籤，點選即跳轉。'],
+  ['全文搜尋', '關鍵字搜尋整份文件並標示位置。'],
+  ['重點標記', '標記段落與頁面，附上自己的筆記。'],
+  ['文章與資料互連', '研究文章與原始資料雙向連結。'],
+  ['桌面・手機閱讀', '原色、暖紙、夜間三種閱讀模式。']
+];
 
-let observer;
+/* ---------- 畫面 ---------- */
 function render() {
-  const list = filtered();
-  const box = $('#list');
-  $('#status').textContent = state.q || state.topic !== '__all__'
-    ? `找到 ${list.length} 篇文章` : `共 ${list.length} 篇文章`;
-  if (!list.length) {
-    box.innerHTML = state.files.length
-      ? '<div class="empty"><b>沒有符合的文章</b>換個關鍵字或議題試試看</div>'
-      : '<div class="empty"><b>還沒有文章</b>按「投稿」上傳第一篇 PDF</div>';
-    return;
-  }
-  const showFeature = !state.q && state.topic === '__all__' && state.sort === 'new' && list.length > 2;
-  box.innerHTML = (showFeature ? featureHtml(list[0]) : '') +
-    `<div class="grid">${(showFeature ? list.slice(1) : list).map(cardHtml).join('')}</div>`;
+  const q = state.q.trim();
+  $('#viewHome').hidden = !!q || state.view !== 'home';
+  $('#viewList').hidden = !$('#viewHome').hidden;
+  if (q) renderSearch(q);
+  else if (state.view === 'home') renderHome();
+  else if (state.view === 'library') renderLibrary();
+  else renderSection(secByKey(state.view));
+  watchThumbs();
+}
 
-  if (observer) observer.disconnect();
-  observer = new IntersectionObserver(entries => entries.forEach(en => {
-    if (!en.isIntersecting) return;
-    observer.unobserve(en.target);
-    const id = en.target.dataset.thumb;
-    if (thumbCache[id] === undefined) enqueueThumb(id);
-  }), { rootMargin: '300px' });
-  box.querySelectorAll('[data-thumb]').forEach(el => observer.observe(el));
+function loadingOrError() {
+  if (state.loadErr) return `<div class="empty"><b>載入失敗</b>${esc(state.loadErr)}</div>`;
+  if (!state.files.length && !state.folders.length) return `<div class="empty"><b>載入中…</b></div>`;
+  return '';
+}
+
+function renderHome() {
+  const box = $('#homeTop');
+  const pre = loadingOrError(); if (pre) { box.innerHTML = pre; return; }
+  if (!state.files.length) { box.innerHTML = '<div class="empty"><b>還沒有文章</b>按「投稿」上傳第一篇 PDF</div>'; return; }
+  const all = sorted(state.files, 'new');
+  const arts = all.filter(f => !isSource(f));
+  const feature = arts.find(isFeatured) || arts[0] || all[0];
+  const latest = (arts.length ? arts : all).filter(f => f !== feature).slice(0, 5);
+  const counts = sectionCounts();
+  const popular = arts.slice().sort((a, b) => (b.comments || 0) - (a.comments || 0) || byNew(a, b)).slice(0, 5);
+  const docs = all.filter(isSource).slice(0, 4);
+  const mcls = ['m-lg', 'm-md', 'm-sm', 'm-sm', 'm-sm'];
+
+  box.innerHTML =
+    `<section class="blk">${sh('No. 01', '精選', 'Featured')}${featureHtml(feature)}</section>` +
+    (latest.length ? `<section class="blk">${sh('No. 02', '最新文章', 'Latest Stories')}<div class="mosaic">${latest.map((f, i) => cardHtml(f, mcls[i])).join('')}</div></section>` : '') +
+    `<section class="blk">${sh('No. 03', '熱門專題', 'Four Slices of the World')}<div class="slices">` +
+      SECTIONS.filter(s => s.key !== 'library').map(s => {
+        const last = all.find(f => secOf(f) === s);
+        return `<button class="slice" data-go="${s.key}" style="--c:${s.c};--ci:${s.ci}">
+          <span class="sn">${s.n}</span><b>${s.name}</b><span class="se">${s.en}</span><p>${s.desc}</p>
+          <span class="sl">${counts[s.key] || 0} 篇文章${last ? `<i>最新｜${esc(titleOf(last))}</i>` : ''}</span></button>`;
+      }).join('') + `</div></section>` +
+    `<section class="blk duo">
+       <div>${sh('No. 04', '熱門文章', 'Most Discussed')}
+         <ol class="pop">${popular.map((f, i) => `<li data-id="${f.id}" style="${vars(f)}"><span class="pn">${String(i + 1).padStart(2, '0')}</span><div>${tagHtml(f)}<b>${esc(titleOf(f))}</b><small>${fmtDate(f.updated)}${f.comments ? `・💬 ${f.comments} 則討論` : ''}</small></div></li>`).join('')}</ol>
+       </div>
+       <div class="lib-teaser">
+         <p class="kick">No. 05・Reading Room</p>
+         <h4>資料閱覽室</h4>
+         <p>研究文章引用的報告、數據與原始文件，都收在這裡。讀完一篇分析，也能回頭檢查它的來源。</p>
+         <ul class="lt-f">${LIB_FEATS.map(x => `<li>${x[0]}</li>`).join('')}</ul>
+         ${docs.length ? `<div class="lt-docs">${docs.map(f => `<div data-id="${f.id}"><small>${fmtDate(f.updated)}</small><span>${esc(titleOf(f))}</span></div>`).join('')}</div>` : ''}
+         <button class="btn" data-go="library">進入閱覽室 →</button>
+       </div>
+     </section>`;
+}
+
+function secHero(s, extra) {
+  return `<header class="sec-hero" style="--c:${s.c};--ci:${s.ci}">
+      <div><div class="sec-num">No. ${s.n}</div><h2 class="sec-t">${s.name}</h2><p class="sec-en">${s.en}</p></div>
+      <div><p class="sec-d">${s.desc}</p><p class="sec-k">${s.sub}</p>${extra || ''}</div>
+    </header>`;
+}
+function sortCtl() {
+  return `<label class="ctl sort" title="排序"><span class="ctl-k">排序</span><select id="sortSel">
+    <option value="new"${state.sort === 'new' ? ' selected' : ''}>最新</option>
+    <option value="old"${state.sort === 'old' ? ' selected' : ''}>最早</option>
+    <option value="title"${state.sort === 'title' ? ' selected' : ''}>標題</option></select></label>`;
+}
+
+function renderSection(s) {
+  const box = $('#viewList');
+  const pre = loadingOrError();
+  let list = state.files.filter(f => secOf(f) === s);
+  const subs = new Map();
+  list.forEach(f => { const k = subLabel(f) || '綜合'; subs.set(k, (subs.get(k) || 0) + 1); });
+  if (state.sub !== 'all' && !subs.has(state.sub)) state.sub = 'all';
+  if (state.sub !== 'all') list = list.filter(f => (subLabel(f) || '綜合') === state.sub);
+  list = sorted(list, state.sort);
+  box.innerHTML = secHero(s) +
+    `<div class="bar"><div class="chips"><button class="chip${state.sub === 'all' ? ' on' : ''}" data-sub="all">全部 <small>${[...subs.values()].reduce((a, b) => a + b, 0)}</small></button>` +
+    [...subs.entries()].sort((a, b) => a[0].localeCompare(b[0], 'zh-Hant')).map(([k, n]) => `<button class="chip${state.sub === k ? ' on' : ''}" data-sub="${esc(k)}">${esc(k)} <small>${n}</small></button>`).join('') +
+    `</div>${sortCtl()}</div>` +
+    (pre || (list.length
+      ? `<p class="status">共 ${list.length} 篇文章</p><div class="grid">${list.map(f => cardHtml(f)).join('')}</div>`
+      : `<div class="empty"><b>這個切片還沒有文章</b>在雲端硬碟建立「${s.name}」資料夾並放入 PDF，就會出現在這裡。</div>`));
+}
+
+function renderLibrary() {
+  const s = secByKey('library'), box = $('#viewList');
+  const pre = loadingOrError();
+  let list = state.files.slice();
+  if (state.libType === 'source') list = list.filter(isSource);
+  if (state.libType === 'article') list = list.filter(f => !isSource(f));
+  if (state.libSec !== 'all') list = list.filter(f => { const x = secOf(f); return state.libSec === 'other' ? !x : x && x.key === state.libSec; });
+  list = sorted(list, state.sort);
+  const nSrc = state.files.filter(isSource).length;
+  box.innerHTML = secHero(s) +
+    `<div class="feats">${LIB_FEATS.map((x, i) => `<div><i>0${i + 1}</i><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>` +
+    `<div class="bar"><div class="chips">
+        <button class="chip${state.libType === 'all' ? ' on' : ''}" data-lt="all">全部文件 <small>${state.files.length}</small></button>
+        <button class="chip${state.libType === 'source' ? ' on' : ''}" data-lt="source">原始資料 <small>${nSrc}</small></button>
+        <button class="chip${state.libType === 'article' ? ' on' : ''}" data-lt="article">研究文章 <small>${state.files.length - nSrc}</small></button>
+      </div>
+      <label class="ctl sort"><span class="ctl-k">切片</span><select id="libSec">
+        <option value="all">全部</option>${SECTIONS.filter(x => x.key !== 'library').map(x => `<option value="${x.key}"${state.libSec === x.key ? ' selected' : ''}>${x.name}</option>`).join('')}
+        <option value="library"${state.libSec === 'library' ? ' selected' : ''}>資料閱覽室</option><option value="other"${state.libSec === 'other' ? ' selected' : ''}>其他</option></select></label>
+      ${sortCtl()}</div>` +
+    (pre || (list.length ? `<table class="cat"><thead><tr><th>文件</th><th>切片</th><th>類型</th><th>連結</th><th>更新</th><th>檔案</th></tr></thead><tbody>` +
+      list.map(f => {
+        const x = secOf(f), lc = linkCount(f), ex = excerptOf(f);
+        return `<tr data-id="${f.id}" style="${vars(f)}">
+          <td class="ct"><b>${esc(titleOf(f))}</b>${ex ? `<span>${esc(ex)}</span>` : ''}</td>
+          <td class="c-sec">${x ? esc(x.name) : '其他'}${subLabel(f) ? `<br><small>${esc(subLabel(f))}</small>` : ''}</td>
+          <td><span class="pill${isSource(f) ? ' src' : ''}">${isSource(f) ? '原始資料' : '研究文章'}</span></td>
+          <td class="c-link num">${lc ? `↔ ${lc}` : '—'}</td>
+          <td class="num">${fmtDate(f.updated)}</td>
+          <td class="c-size num">${isPdf(f) ? 'PDF' : '圖片'}・${fmtSize(f.size)}</td></tr>`;
+      }).join('') + `</tbody></table>`
+      : `<div class="empty"><b>沒有符合的文件</b>換個篩選條件試試看</div>`));
+}
+
+function renderSearch(q) {
+  const ql = q.toLowerCase();
+  const list = sorted(state.files.filter(f => (f.name + ' ' + (f.description || '') + ' ' + (f.folder || '') + ' ' + ((secOf(f) || {}).name || '')).toLowerCase().includes(ql)), state.sort);
+  $('#viewList').innerHTML =
+    `<header class="sec-hero"><div><div class="sec-num">Search</div><h2 class="sec-t">「${esc(q)}」</h2></div><div><p class="sec-d">在所有切片與資料閱覽室中，找到 ${list.length} 篇相關內容。</p></div></header>` +
+    `<div class="bar"><div class="chips"></div>${sortCtl()}</div>` +
+    (list.length ? `<div class="grid">${list.map(f => cardHtml(f)).join('')}</div>` : '<div class="empty"><b>沒有符合的文章</b>換個關鍵字試試看</div>');
+}
+
+function setView(v) {
+  state.view = VIEWS.includes(v) ? v : 'home';
+  state.sub = 'all';
+  if (state.q) { state.q = ''; $('#q').value = ''; }
+  renderNav(); render();
+  const y = state.view === 'home' ? 0 : $('#main').getBoundingClientRect().top + window.scrollY - $('#nav').offsetHeight;
+  window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+}
+function viewUrl(v) { return v === 'home' ? location.pathname + location.search : '#/' + v; }
+function go(v) {
+  if ($('#reader').classList.contains('open')) closeReader();
+  setView(v);
+  try { history.pushState(null, '', viewUrl(state.view)); } catch (e) {}
+}
+function parseHash() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (!h) return { view: 'home' };
+  if (h.startsWith('/')) return { view: h.slice(1) };
+  return { id: h };
 }
 
 /* ---------- 封面縮圖（同時最多 4 個請求） ---------- */
-const thumbCache = {}; const queue = []; let active = 0;
+const thumbCache = {}; const queue = []; const pending = new Set(); let active = 0; let observer;
 function enqueueThumb(id) { queue.push(id); pump(); }
 function pump() {
   while (active < 4 && queue.length) {
@@ -549,6 +1224,16 @@ function thumbInner(f) {
   if (t) return `<img src="${t}" alt="" loading="lazy">`;
   if (t === null) return `<span class="ph">${esc(titleOf(f).slice(0, 1))}</span>`;
   return '';
+}
+function watchThumbs() {
+  if (observer) observer.disconnect();
+  observer = new IntersectionObserver(entries => entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    observer.unobserve(en.target);
+    const id = en.target.dataset.thumb;
+    if (thumbCache[id] === undefined && !pending.has(id)) { pending.add(id); enqueueThumb(id); }
+  }), { rootMargin: '300px' });
+  document.querySelectorAll('#main [data-thumb]').forEach(el => { if (!el.innerHTML) observer.observe(el); });
 }
 
 /* ---------- 閱讀器 ---------- */
@@ -570,34 +1255,38 @@ function loading(msg) { $('#rbody').innerHTML = `<div class="spinner"></div><div
 function openReader(id) {
   const f = state.files.find(x => x.id === id); if (!f) return;
   closeDoc();
-  state.cur = f; state.data = null; state.zoom = 1; state.imgZoom = 1;
+  state.cur = f; state.data = null; state.zoom = 1; state.imgZoom = 1; state.curPage = 1;
+  state.texts = {}; state.hits = []; state.hitCur = -1; state.findTok++; state.toc = [];
   state.token++;
-  const c = colorOf(topicOf(f));
-  const r = $('#reader');
-  r.style.setProperty('--c', c);
-  $('#rTag').innerHTML = esc(topicOf(f)); $('#iTag').innerHTML = esc(topicOf(f));
+  const r = $('#reader'), s = secOf(f);
+  r.setAttribute('style', vars(f));
+  const tag = (s ? s.name : '其他') + (subLabel(f) ? '・' + subLabel(f) : '');
+  $('#rTag').textContent = tag; $('#iTag').textContent = tag;
   $('#rTitle').textContent = titleOf(f); $('#iTitle').textContent = titleOf(f);
   $('#iFolder').textContent = f.folder || '未分類';
+  $('#iKind').textContent = isSource(f) ? '原始資料' : '研究文章';
   $('#iDate').textContent = fmtDate(f.updated) + '（' + relDate(f.updated) + '）';
   $('#iLen').textContent = '—';
   $('#iFile').textContent = (isPdf(f) ? 'PDF' : '圖片') + '・' + fmtSize(f.size);
-  $('#dlBtn').hidden = $('#dlBtn2').hidden = f.size > MAX;
+  $('#dlBtn').hidden = $('#dlBtn2').hidden = f.size > MAX || state.demo;
   $('#dlBtn2').innerHTML = isPdf(f) ? '⤓ 下載 PDF' : '⤓ 下載圖片';
-  showDesc();
-  loadComments();
-  renderNext();
+  $('#fq').value = ''; $('#fRes').innerHTML = isPdf(f) ? '<p class="hint">輸入關鍵字後按搜尋，結果會依頁碼列出，並在頁面上標示位置。</p>' : '<p class="hint">圖片檔案不支援文字搜尋。</p>';
+  $('#fNav').hidden = true;
+  $('#tocBox').innerHTML = '<p class="hint">文件載入後顯示目錄…</p>'; $('#jumpOf').textContent = '';
+  showDesc(); renderRelated(); loadComments(); renderNext(); loadMarks();
   $('#rProg').style.width = '0';
   $('#rPage').textContent = '';
   r.classList.add('open');
   document.body.style.overflow = 'hidden';
-  if (window.innerWidth <= 820) r.classList.add('noinfo');
+  if (window.innerWidth <= 860) r.classList.add('noinfo'); else { r.classList.remove('noinfo'); }
+  setPanel(state.panel || 'info');
   $('#rbody').scrollTop = 0;
   showOriginal();
   try { history.replaceState(null, '', '#' + f.id); } catch (e) {}
 }
 
 function closeDoc() {
-  state.token++; state.layout++;
+  state.token++; state.layout++; state.findTok++;
   if (pageObserver) pageObserver.disconnect();
   if (state.pdf) { state.pdf.destroy(); state.pdf = null; }
   state.pageEls = null;
@@ -608,12 +1297,33 @@ function closeReader() {
   $('#reader').classList.remove('open');
   $('#rbody').innerHTML = '';
   document.body.style.overflow = '';
-  try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+  try { history.replaceState(null, '', viewUrl(state.view)); } catch (e) {}
+}
+
+/* 側欄分頁：資訊／目錄／搜尋／標記／留言 */
+function setPanel(p) {
+  state.panel = p;
+  document.querySelectorAll('#rtabs button').forEach(b => b.classList.toggle('on', b.dataset.p === p));
+  document.querySelectorAll('.rpanel').forEach(x => x.classList.toggle('on', x.dataset.p === p));
+  const open = !$('#reader').classList.contains('noinfo');
+  document.querySelectorAll('#rPanelBtns .rbtn').forEach(b => b.classList.toggle('on', open && b.dataset.panel === p));
+}
+function togglePanel(p) {
+  const r = $('#reader');
+  if (!r.classList.contains('noinfo') && state.panel === p) r.classList.add('noinfo');
+  else r.classList.remove('noinfo');
+  setPanel(p);
+  if (p === 'find' && !r.classList.contains('noinfo')) setTimeout(() => $('#fq').focus(), 30);
 }
 
 /* 原文：PDF 連續捲動 / 圖片 */
 async function showOriginal() {
   const f = state.cur, token = state.token;
+  if (state.demo) {
+    $('#rbody').innerHTML = `<div class="err"><b>這是示範資料</b>目前沒有實際檔案。<br>在 index.html 填入 API_URL 後，這裡會顯示雲端硬碟中的 PDF，<br>並可使用目錄、全文搜尋與重點標記。</div>`;
+    $('#tocBox').innerHTML = '<p class="hint">示範模式沒有文件內容。</p>';
+    return;
+  }
   try {
     if (!state.data) {
       loading('正在取得文章…');
@@ -627,6 +1337,8 @@ async function showOriginal() {
         state.pdf = await pdfjsLib.getDocument({ data: b64ToBytes(state.data.base64) }).promise;
         if (token !== state.token) return;
         $('#iLen').textContent = state.pdf.numPages + ' 頁';
+        $('#jumpIn').max = state.pdf.numPages; $('#jumpOf').textContent = `共 ${state.pdf.numPages} 頁`;
+        buildToc();
       }
       await layoutPdf();
     } else {
@@ -637,9 +1349,10 @@ async function showOriginal() {
       const w = document.createElement('div'); w.className = 'imgwrap'; w.appendChild(img);
       $('#rbody').replaceChildren(w);
       $('#iLen').textContent = '1 張圖片';
+      $('#tocBox').innerHTML = '<p class="hint">圖片檔案沒有章節目錄。</p>';
     }
   } catch (e) {
-    if (token === state.token) $('#rbody').innerHTML = `<div class="err">無法開啟：${esc(errMsg(e))}<br><button class="rbtn" onclick="downloadCurrent()">改為下載檔案</button></div>`;
+    if (token === state.token) $('#rbody').innerHTML = `<div class="err"><b>無法開啟</b>${esc(errMsg(e))}<br><button class="rbtn" onclick="downloadCurrent()">改為下載檔案</button></div>`;
   }
 }
 
@@ -694,7 +1407,159 @@ async function renderPage(el, token, layout) {
     if (token !== state.token || layout !== state.layout) return;
     el.style.width = canvas.style.width; el.style.height = canvas.style.height;
     el.replaceChildren(canvas, Object.assign(document.createElement('span'), { className: 'pnum', textContent: el.dataset.n }));
+    el._vp = vp;
+    drawMarks(el);
   } catch (e) { /* 換頁 / 關閉時取消，忽略 */ }
+}
+
+/* 頁面上的搜尋結果與標記 */
+function boxHtml(vp, r, cls) {
+  const v = vp.convertToViewportRectangle(r);
+  const l = Math.min(v[0], v[2]), t = Math.min(v[1], v[3]);
+  return `<i class="${cls}" style="left:${l.toFixed(1)}px;top:${t.toFixed(1)}px;width:${Math.abs(v[2] - v[0]).toFixed(1)}px;height:${Math.abs(v[3] - v[1]).toFixed(1)}px"></i>`;
+}
+function drawMarks(el) {
+  const vp = el._vp; if (!vp) return;
+  const n = Number(el.dataset.n);
+  let html = '';
+  state.marks.forEach(m => { if (m.page === n) (m.rects || []).forEach(r => html += boxHtml(vp, r, 'mk')); });
+  state.hits.forEach((h, k) => { if (h.page === n) h.rects.forEach(r => html += boxHtml(vp, r, k === state.hitCur ? 'cur' : '')); });
+  let layer = el.querySelector('.hl');
+  if (!html) { if (layer) layer.remove(); return; }
+  if (!layer) { layer = document.createElement('div'); layer.className = 'hl'; el.appendChild(layer); }
+  layer.innerHTML = html;
+}
+function redrawMarks() { (state.pageEls || []).forEach(drawMarks); }
+
+async function gotoPage(n, rect) {
+  if (!state.pageEls) return;
+  n = Math.max(1, Math.min(state.pageEls.length, n));
+  const el = state.pageEls[n - 1];
+  let off = -16;
+  if (rect) {
+    const page = await state.pdf.getPage(n);
+    const v = page.getViewport({ scale: state.fitScale * state.zoom }).convertToViewportRectangle(rect);
+    off = Math.min(v[1], v[3]) - 140;
+  }
+  $('#rbody').scrollTo({ top: el.offsetTop + off, behavior: 'smooth' });
+  if (!rect) { el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
+  if (window.innerWidth <= 860) $('#reader').classList.add('noinfo'), setPanel(state.panel);
+}
+
+/* 章節目錄：讀取 PDF 內建書籤；沒有的話列出頁碼 */
+async function destToPage(dest) {
+  try {
+    if (typeof dest === 'string') dest = await state.pdf.getDestination(dest);
+    if (!Array.isArray(dest)) return null;
+    const ref = dest[0];
+    if (typeof ref === 'number') return ref + 1;
+    return (await state.pdf.getPageIndex(ref)) + 1;
+  } catch (e) { return null; }
+}
+async function buildToc() {
+  const pdf = state.pdf, token = state.token;
+  let outline = null;
+  try { outline = await pdf.getOutline(); } catch (e) {}
+  if (token !== state.token) return;
+  const box = $('#tocBox');
+  if (outline && outline.length) {
+    state.toc = [];
+    const walk = (items, d) => items.map(it => {
+      const k = state.toc.push(it.dest) - 1;
+      return `<button data-ti="${k}" style="--d:${d}"><span>${esc(it.title || '（未命名）')}</span><em id="tp${k}"></em></button>` + (it.items && it.items.length ? walk(it.items, d + 1) : '');
+    }).join('');
+    box.innerHTML = `<div class="toc">${walk(outline, 0)}</div>`;
+    for (let k = 0; k < Math.min(state.toc.length, 400); k++) {
+      const p = await destToPage(state.toc[k]);
+      if (token !== state.token) return;
+      const em = document.getElementById('tp' + k); if (em && p) em.textContent = 'p.' + p;
+    }
+  } else {
+    const n = pdf.numPages;
+    box.innerHTML = `<p class="hint" style="margin-bottom:10px">這份文件沒有內建章節書籤，可直接點選頁碼跳轉。</p><div class="pgrid">${Array.from({ length: n }, (_, i) => `<button data-pg="${i + 1}">${i + 1}</button>`).join('')}</div>`;
+  }
+}
+
+/* 全文搜尋 */
+async function pageText(n) {
+  if (state.texts[n]) return state.texts[n];
+  const page = await state.pdf.getPage(n);
+  const tc = await page.getTextContent();
+  let str = ''; const items = [];
+  for (const it of tc.items) {
+    if (!('str' in it)) continue;
+    const s = str.length; str += it.str;
+    const tx = it.transform, h = it.height || Math.hypot(tx[2], tx[3]) || 10;
+    items.push({ s, e: str.length, x: tx[4], y: tx[5], w: it.width, h });
+    if (it.hasEOL) str += '\n';
+  }
+  return (state.texts[n] = { str, low: str.toLowerCase(), items });
+}
+function rectsFor(t, a, b) {
+  return t.items.filter(it => it.e > it.s && it.e > a && it.s < b).map(it => {
+    const L = it.e - it.s, fa = Math.max(0, (a - it.s) / L), fb = Math.min(1, (b - it.s) / L);
+    return [it.x + it.w * fa, it.y - it.h * 0.25, it.x + it.w * fb, it.y + it.h * 0.95];
+  });
+}
+async function doFind(q) {
+  q = q.trim(); if (!q || !state.pdf) return;
+  const tok = ++state.findTok, token = state.token, N = state.pdf.numPages, ql = q.toLowerCase();
+  state.hits = []; state.hitCur = -1; redrawMarks();
+  let textChars = 0;
+  $('#fRes').innerHTML = '<p class="hint"><span class="spinner sm"></span> 搜尋中…</p>'; $('#fNav').hidden = true;
+  for (let n = 1; n <= N; n++) {
+    const t = await pageText(n);
+    if (tok !== state.findTok || token !== state.token) return;
+    textChars += t.str.trim().length;
+    let i = t.low.indexOf(ql);
+    while (i >= 0 && state.hits.length < 500) {
+      const before = t.str.slice(Math.max(0, i - 22), i).replace(/\s+/g, ' ');
+      const after = t.str.slice(i + q.length, i + q.length + 40).replace(/\s+/g, ' ');
+      state.hits.push({ page: n, rects: rectsFor(t, i, i + q.length), before, match: t.str.slice(i, i + q.length), after });
+      i = t.low.indexOf(ql, i + ql.length);
+    }
+    if (n % 8 === 0) $('#fRes').innerHTML = `<p class="hint"><span class="spinner sm"></span> 搜尋中… ${n} / ${N} 頁，已找到 ${state.hits.length} 處</p>`;
+  }
+  if (!state.hits.length) {
+    $('#fRes').innerHTML = textChars < 20
+      ? '<p class="hint">這份 PDF 可能是掃描影像，沒有可搜尋的文字層。</p>'
+      : `<p class="hint">找不到「${esc(q)}」。</p>`;
+    return;
+  }
+  $('#fRes').innerHTML = `<p class="hint" style="margin-bottom:6px">找到 ${state.hits.length}${state.hits.length >= 500 ? '+' : ''} 處</p>` +
+    state.hits.map((h, k) => `<div class="hit" data-k="${k}"><span class="hp">p.${h.page}</span><span class="hs">${esc(h.before)}<mark>${esc(h.match)}</mark>${esc(h.after)}</span><button class="hm" data-mk="${k}" title="加入標記">＋</button></div>`).join('');
+  $('#fNav').hidden = false;
+  setHit(0, true);
+}
+function setHit(k, noScrollList) {
+  if (!state.hits.length) return;
+  k = (k + state.hits.length) % state.hits.length;
+  state.hitCur = k;
+  $('#fPos').textContent = `${k + 1} / ${state.hits.length}`;
+  document.querySelectorAll('.hit').forEach(x => x.classList.toggle('on', Number(x.dataset.k) === k));
+  if (!noScrollList) { const it = document.querySelector(`.hit[data-k="${k}"]`); it && it.scrollIntoView({ block: 'nearest' }); }
+  redrawMarks();
+  const h = state.hits[k];
+  if (window.innerWidth > 860) gotoPage(h.page, h.rects[0]);
+  else { const el = state.pageEls[h.page - 1]; $('#rbody').scrollTo({ top: el.offsetTop - 16, behavior: 'smooth' }); }
+}
+
+/* 重點標記（儲存在瀏覽器） */
+function markKey() { return 'tos-marks:' + state.cur.id; }
+function loadMarks() {
+  try { state.marks = JSON.parse(store(markKey()) || '[]'); } catch (e) { state.marks = []; }
+  renderMarks();
+}
+function saveMarks() { store(markKey(), JSON.stringify(state.marks)); renderMarks(); redrawMarks(); }
+function addMark(m) { state.marks.push(Object.assign({ t: new Date().toISOString() }, m)); saveMarks(); toast('已加入標記'); }
+function renderMarks() {
+  const list = state.marks.map((m, i) => [m, i]).sort((a, b) => a[0].page - b[0].page);
+  $('#rMarkN').textContent = state.marks.length || '';
+  $('#markList').innerHTML = list.length ? list.map(([m, i]) => `
+    <div class="mark" data-mi="${i}">
+      <div class="mk-h"><span class="hp">第 ${m.page} 頁</span><time>${fmtDate(m.t)}</time><button class="del" data-del="${i}" title="刪除標記">✕</button></div>
+      <div class="mk-t">${esc(m.text)}</div>${m.note ? `<div class="mk-n">${esc(m.note)}</div>` : ''}
+    </div>`).join('') : '<div class="cmt-none">還沒有標記。</div>';
 }
 
 /* 縮放 */
@@ -710,6 +1575,14 @@ function zoom(dir) {
   }
 }
 
+/* 閱讀模式：原色／暖紙／夜間 */
+const MODES = { plain: '原色', warm: '暖紙', night: '夜間' };
+function setMode(m) {
+  if (!MODES[m]) m = 'plain';
+  $('#reader').dataset.mode = m; $('#modeLbl').textContent = MODES[m]; store('tos-mode', m);
+}
+function cycleMode() { const k = Object.keys(MODES); setMode(k[(k.indexOf($('#reader').dataset.mode) + 1) % k.length]); }
+
 /* 進度條與頁碼 */
 function onScroll() {
   const b = $('#rbody');
@@ -719,13 +1592,14 @@ function onScroll() {
     const y = b.scrollTop + b.clientHeight * 0.35;
     let cur = 1;
     for (const el of state.pageEls) { if (el.offsetTop <= y) cur = Number(el.dataset.n); else break; }
+    state.curPage = cur;
     $('#rPage').textContent = `${cur} / ${state.pdf.numPages}`;
   }
 }
 
 /* 摘要 */
 function showDesc() {
-  const f = state.cur; const d = f.description.trim();
+  const f = state.cur; const d = (f.description || '').trim();
   $('#iDesc').textContent = d || '這篇文章還沒有摘要。按「編輯」寫幾句重點，讓之後的讀者更快掌握內容。';
   $('#iDesc').classList.toggle('none', !d);
   $('#iDesc').hidden = false; $('#descEdit').hidden = true; $('#editDesc').hidden = !auth.admin;
@@ -739,14 +1613,30 @@ function saveDesc() {
   const f = state.cur; if (!f) return;
   const btn = $('#saveDesc'); btn.disabled = true;
   run('updateDescription', f.id, $('#desc').value)
-    .then(meta => { f.description = meta.description; toast('已儲存摘要'); if (state.cur === f) showDesc(); render(); })
+    .then(meta => { f.description = meta.description; buildRefs(); toast('已儲存摘要'); if (state.cur === f) { showDesc(); renderRelated(); } render(); })
     .catch(e => toast('儲存失敗：' + errMsg(e)))
     .finally(() => btn.disabled = false);
 }
 
+/* 延伸閱讀・原始資料 */
+function renderRelated() {
+  const f = state.cur;
+  const out = state.refsOut.get(f.id) || [], inn = (state.refsIn.get(f.id) || []).filter(x => !out.includes(x));
+  const item = (x, lab) => `<div class="relcard" data-id="${x.id}"><small>${lab}・${isSource(x) ? '原始資料' : '研究文章'}</small><div>${esc(titleOf(x))}</div></div>`;
+  $('#relBox').innerHTML = (out.length || inn.length)
+    ? `<div class="sec-l">${isSource(f) ? '引用這份資料的文章' : '原始資料・延伸閱讀'}</div>` + out.map(x => item(x, '引用')).join('') + inn.map(x => item(x, '被引用於')).join('')
+    : '';
+}
+
 /* 下一篇（依目前的篩選與排序） */
+function currentList() {
+  if (state.q) return sorted(state.files.filter(f => (f.name + ' ' + f.description + ' ' + f.folder).toLowerCase().includes(state.q.trim().toLowerCase())), state.sort);
+  if (state.view === 'home' || state.view === 'library') return sorted(state.files, state.sort);
+  const s = secByKey(state.view);
+  return sorted(state.files.filter(f => secOf(f) === s), state.sort);
+}
 function renderNext() {
-  const list = filtered();
+  const list = currentList();
   const i = list.findIndex(x => x.id === state.cur.id);
   const nxt = i >= 0 && i < list.length - 1 ? list[i + 1] : null;
   const prv = i > 0 ? list[i - 1] : null;
@@ -777,7 +1667,7 @@ function fmtTime(iso) {
   return fmtDate(iso) + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
 }
 function setCommentCount(n) {
-  $('#rCmtN').textContent = n;
+  $('#rCmtN').textContent = n || '';
   $('#cmtN').textContent = n ? `（${n}）` : '';
   if (state.cur) { state.cur.comments = n; }
 }
@@ -863,7 +1753,7 @@ function signOut() {
 function renderGoogleButton(el, opts) {
   if (!gisOk()) return;
   google.accounts.id.renderButton(el, Object.assign({
-    type: 'standard', theme: 'outline', size: 'medium', text: 'signin', shape: 'rectangular', locale: 'zh-TW'
+    type: 'standard', theme: 'outline', size: 'medium', text: 'signin', shape: 'pill', locale: 'zh-TW'
   }, opts || {}));
 }
 function renderAuth() {
@@ -888,9 +1778,10 @@ function renderAuth() {
 function loadComments() {
   const f = state.cur, token = state.token;
   state.comments = [];
+  $('#cmtText').value = '';
+  if (state.demo) { renderComments(); return; }
   $('#cmtList').innerHTML = '<div class="cmt-none"><span class="spinner sm"></span> 載入留言中…</div>';
   setCommentCount(f.comments || 0);
-  $('#cmtText').value = '';
   run('listComments', f.id)
     .then(list => { if (token === state.token) { state.comments = list; renderComments(); } })
     .catch(e => { if (token === state.token) $('#cmtList').innerHTML = `<div class="cmt-none">留言載入失敗：${esc(errMsg(e))}</div>`; });
@@ -931,8 +1822,9 @@ function openUpload() {
   if (!auth.admin) return toast('只有管理員可以投稿');
   const root = state.folders.find(x => !x.path);
   let def = root ? root.id : '';
-  if (state.topic !== '__all__') {
-    const fd = state.folders.find(x => x.path === state.topic);
+  const s = secByKey(state.view);
+  if (s) {
+    const fd = state.folders.find(x => x.depth === 1 && secOfTopic(x.path) === s);
     if (fd) def = fd.id;
   }
   $('#upTarget').value = def;
@@ -949,7 +1841,7 @@ async function upload(files, folderId, description) {
   for (const file of files) {
     if (!okTypes.includes(file.type)) { toast(`略過 ${file.name}：只接受 PDF / PNG / JPG`); continue; }
     if (file.size > MAX) { toast(`略過 ${file.name}：超過 20MB`); continue; }
-    $('#status').textContent = `上傳至「${where}」：${file.name}（${done + 1}/${files.length}）`;
+    toast(`上傳至「${where}」：${file.name}（${done + 1}/${files.length}）`);
     try {
       const base64 = await readAsBase64(file);
       await run('uploadFile', { name: file.name, mimeType: file.type, base64, folderId, description });
@@ -961,18 +1853,21 @@ async function upload(files, folderId, description) {
 }
 
 /* ---------- 事件 ---------- */
-$('#q').addEventListener('input', e => { state.q = e.target.value; render(); });
-$('#sort').addEventListener('change', e => { state.sort = e.target.value; render(); });
-$('#topics').addEventListener('click', e => {
-  const b = e.target.closest('.topic'); if (!b) return;
-  state.topic = b.dataset.t; renderTopics(); render();
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-go]');
+  if (g && !e.target.closest('#reader')) { e.preventDefault(); go(g.dataset.go); }
 });
-$('#home').addEventListener('click', () => {
-  state.topic = '__all__'; state.q = ''; $('#q').value = '';
-  renderTopics(); render(); window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-$('#list').addEventListener('click', e => {
+$('#home').addEventListener('click', e => { e.preventDefault(); go('home'); });
+$('#q').addEventListener('input', e => { state.q = e.target.value; renderNav(); render(); });
+$('#main').addEventListener('click', e => {
+  if (e.target.closest('[data-go]')) return;
+  const sub = e.target.closest('[data-sub]'); if (sub) { state.sub = sub.dataset.sub; render(); return; }
+  const lt = e.target.closest('[data-lt]'); if (lt) { state.libType = lt.dataset.lt; render(); return; }
   const c = e.target.closest('[data-id]'); if (c) openReader(c.dataset.id);
+});
+$('#main').addEventListener('change', e => {
+  if (e.target.id === 'sortSel') { state.sort = e.target.value; render(); }
+  if (e.target.id === 'libSec') { state.libSec = e.target.value; render(); }
 });
 
 $('#rClose').addEventListener('click', closeReader);
@@ -983,13 +1878,35 @@ $('#cmtText').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctr
 $('#cmtList').addEventListener('click', e => { const d = e.target.closest('.del'); if (d) deleteComment(d.dataset.key); });
 $('#zIn').addEventListener('click', () => zoom(1));
 $('#zOut').addEventListener('click', () => zoom(-1));
-$('#infoBtn').addEventListener('click', () => $('#reader').classList.toggle('noinfo'));
+$('#modeBtn').addEventListener('click', cycleMode);
+$('#rPanelBtns').addEventListener('click', e => { const b = e.target.closest('[data-panel]'); if (b) togglePanel(b.dataset.panel); });
+$('#rtabs').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (b) setPanel(b.dataset.p); });
 $('#rbody').addEventListener('scroll', onScroll, { passive: true });
-$('#rbody').addEventListener('click', () => { if (window.innerWidth <= 820) $('#reader').classList.add('noinfo'); });
+$('#rbody').addEventListener('click', () => { if (window.innerWidth <= 860) { $('#reader').classList.add('noinfo'); setPanel(state.panel); } });
 $('#editDesc').addEventListener('click', editDesc);
 $('#cancelDesc').addEventListener('click', showDesc);
 $('#saveDesc').addEventListener('click', saveDesc);
-$('#nextBox').addEventListener('click', e => { const c = e.target.closest('[data-id]'); if (c) openReader(c.dataset.id); });
+$('#rinfo').addEventListener('click', e => {
+  const c = e.target.closest('.nextcard,.relcard'); if (c) return openReader(c.dataset.id);
+  const ti = e.target.closest('[data-ti]'); if (ti) return destToPage(state.toc[+ti.dataset.ti]).then(p => p ? gotoPage(p) : toast('無法解析這個章節位置'));
+  const pg = e.target.closest('[data-pg]'); if (pg) return gotoPage(+pg.dataset.pg);
+  const mk = e.target.closest('[data-mk]');
+  if (mk) { const h = state.hits[+mk.dataset.mk]; return addMark({ page: h.page, text: (h.before + h.match + h.after).trim(), rects: h.rects, note: '' }); }
+  const hit = e.target.closest('.hit'); if (hit) return setHit(+hit.dataset.k, true);
+  const del = e.target.closest('[data-del]'); if (del) { state.marks.splice(+del.dataset.del, 1); return saveMarks(); }
+  const m = e.target.closest('[data-mi]'); if (m) { const x = state.marks[+m.dataset.mi]; return gotoPage(x.page, (x.rects || [])[0]); }
+});
+$('#findForm').addEventListener('submit', e => { e.preventDefault(); doFind($('#fq').value); });
+$('#fPrev').addEventListener('click', () => setHit(state.hitCur - 1));
+$('#fNext').addEventListener('click', () => setHit(state.hitCur + 1));
+$('#jumpBtn').addEventListener('click', () => { const n = parseInt($('#jumpIn').value, 10); if (n) gotoPage(n); });
+$('#jumpIn').addEventListener('keydown', e => { if (e.key === 'Enter') $('#jumpBtn').click(); });
+$('#markPage').addEventListener('click', () => {
+  if (!state.cur) return;
+  const note = $('#markNote').value.trim();
+  addMark({ page: state.pdf ? state.curPage : 1, text: `第 ${state.pdf ? state.curPage : 1} 頁`, rects: [], note });
+  $('#markNote').value = '';
+});
 
 let resizeT;
 window.addEventListener('resize', () => {
@@ -1000,6 +1917,12 @@ window.addEventListener('resize', () => {
       layoutPdf(b.scrollHeight > b.clientHeight ? b.scrollTop / (b.scrollHeight - b.clientHeight) : 0);
     }
   }, 250);
+});
+window.addEventListener('popstate', () => {
+  const p = parseHash();
+  if (p.id) { if (state.files.some(f => f.id === p.id)) openReader(p.id); return; }
+  if ($('#reader').classList.contains('open')) closeReader();
+  setView(p.view);
 });
 
 $('#uploadBtn').addEventListener('click', openUpload);
@@ -1021,18 +1944,115 @@ document.addEventListener('keydown', e => {
   if (!$('#reader').classList.contains('open') || /TEXTAREA|INPUT/.test(e.target.tagName)) return;
   if (e.key === '+' || e.key === '=') zoom(1);
   if (e.key === '-') zoom(-1);
+  if (e.key === '/' || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f')) { e.preventDefault(); $('#reader').classList.remove('noinfo'); setPanel('find'); $('#fq').focus(); }
 });
+
+/* ---------- 編輯室手記：四則輪播 ---------- */
+const rot = { i: 0, timer: null, paused: false, hover: false, offscreen: false, startedAt: 0, remain: 0 };
+function slides() { return document.querySelectorAll('.rot-slide'); }
+function rotDur(i) { return Number(slides()[i].dataset.dur) || 12000; }
+function rotGo(i) {
+  const sl = slides(), tabs = document.querySelectorAll('#mfTabs button'), n = sl.length;
+  i = (i + n) % n;
+  sl.forEach((s, k) => { s.classList.toggle('on', k === i); s.setAttribute('aria-hidden', k === i ? 'false' : 'true'); });
+  tabs.forEach((t, k) => { t.classList.remove('on'); t.classList.toggle('done', k < i); t.setAttribute('aria-selected', k === i); });
+  tabs[i].style.setProperty('--dur', rotDur(i) / 1000 + 's');
+  void tabs[i].offsetWidth;                 // 重新觸發進度條動畫
+  tabs[i].classList.add('on');
+  if (window.innerWidth <= 860 && !rot.offscreen) tabs[i].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  rot.i = i; rot.remain = rotDur(i);
+  rotSchedule();
+}
+function rotStopped() {
+  return rot.paused || rot.hover || rot.focus || rot.offscreen || document.hidden ||
+    $('#essayMore').getAttribute('aria-expanded') === 'true' ||
+    matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+function rotSchedule() {
+  if (rot.timer) { clearTimeout(rot.timer); rot.timer = null; rot.remain -= Date.now() - rot.startedAt; }
+  const stop = rotStopped();
+  $('#mf').classList.toggle('paused', stop);
+  $('#rot').setAttribute('aria-live', stop ? 'polite' : 'off');
+  if (stop) return;
+  rot.startedAt = Date.now();
+  rot.timer = setTimeout(() => { rot.timer = null; rotGo(rot.i + 1); }, Math.max(300, rot.remain));
+}
+function rotInit() {
+  $('#rotPrev').onclick = () => rotGo(rot.i - 1);
+  $('#rotNext').onclick = () => rotGo(rot.i + 1);
+  $('#mfTabs').onclick = e => { const b = e.target.closest('button'); if (b) rotGo(Number(b.dataset.i)); };
+  $('#rotPause').onclick = () => {
+    rot.paused = !rot.paused;
+    $('#rotPause').textContent = rot.paused ? '▶' : '❚❚';
+    $('#rotPause').setAttribute('aria-label', rot.paused ? '繼續輪播' : '暫停輪播');
+    rotSchedule();
+  };
+  $('#essayMore').onclick = () => {
+    const open = $('#essayMore').getAttribute('aria-expanded') !== 'true';
+    $('#essayMore').setAttribute('aria-expanded', open);
+    $('#essayMore').textContent = open ? '收合 ↑' : '展開全文 ↓';
+    $('.essay-wrap').classList.toggle('open', open);
+    rotSchedule();
+  };
+  const box = $('#rot');
+  const hoverOn = () => { rot.hover = true; rotSchedule(); }, hoverOff = () => { rot.hover = false; rotSchedule(); };
+  box.addEventListener('mouseenter', hoverOn); box.addEventListener('mouseleave', hoverOff);
+  $('#mf').addEventListener('focusin', e => { if (e.target.matches(':focus-visible')) { rot.focus = true; rotSchedule(); } });
+  $('#mf').addEventListener('focusout', () => { rot.focus = false; rotSchedule(); });
+  document.addEventListener('visibilitychange', rotSchedule);
+  new IntersectionObserver(([en]) => { rot.offscreen = !en.isIntersecting; rotSchedule(); }, { threshold: 0.25 }).observe($('#mf'));
+  let x0 = null, y0 = null;
+  box.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+  box.addEventListener('touchend', e => {
+    if (x0 == null) return;
+    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) rotGo(rot.i + (dx < 0 ? 1 : -1));
+  });
+  rot.offscreen = true;
+  rotGo(0);
+}
+rotInit();
+
+/* ---------- 示範資料（僅在尚未設定 API_URL 時使用） ---------- */
+function demoData() {
+  const ago = d => new Date(Date.now() - d * 86400000).toISOString();
+  const F = (id, name, folder, d, description, comments, size) =>
+    ({ id: 'demo-' + id, name: name + '.pdf', mimeType: 'application/pdf', size: size || 1800000, updated: ago(d), folder, description, comments: comments || 0 });
+  const folders = [{ id: 'root', path: '', depth: 0 }].concat(
+    ['社會切片', '經濟切片', '歷史切片', '思想切片', '資料閱覽室'].map((p, i) => ({ id: 'fd' + i, path: p, depth: 1 })));
+  const files = [
+    F(1, '為什麼房價所得比居高不下？從供給、信用與稅制三條線索看', '經濟切片 / 房地產', 2, '【精選】房價不是單一原因造成的。這篇文章把問題拆成供給、信用與稅制三條線索，逐一檢查各自能解釋多少，又留下哪些疑問。【原始資料：住宅價格指數整理】', 12, 4200000),
+    F(2, '長照制度的十年：制度設計與人力缺口', '社會切片 / 公共政策', 4, '服務據點變多了，為什麼家屬仍覺得找不到人？從給付設計、薪資結構與培訓管道，看制度如何影響第一線人力。【原始資料：長照服務人力統計報告】', 8),
+    F(3, '印刷術與宗教改革：第一次資訊革命', '歷史切片 / 世界史', 6, '一項新技術如何改變知識的流通方式，又如何讓既有權威難以維持？回看十六世紀，也許能更冷靜地看待今天的社群媒體。', 5),
+    F(4, '為什麼我們容易相信陰謀論？', '思想切片 / 心理', 9, '相信陰謀論的人不一定比較不聰明。這篇文章整理幾種常見的心理機制，也談談怎麼和身邊的人討論而不吵起來。', 15),
+    F(5, '利率調整與房貸族：政策傳導的時間差', '經濟切片 / 金融', 12, '央行調整利率之後，房貸負擔多久才會反映？不同貸款條件的家庭，感受為什麼差這麼多。', 3),
+    F(6, '清代臺灣的土地開墾與大小租制度', '歷史切片 / 台灣史', 15, '一塊地為什麼會有兩層地主？從開墾契約理解清代臺灣的土地關係，以及它如何影響後來的土地改革。', 2),
+    F(7, '公平是什麼？從「無知之幕」談起', '思想切片 / 哲學', 18, '如果不知道自己會出生在什麼位置，你會選擇什麼樣的社會規則？用一個思想實驗，重新整理我們對公平的直覺。', 6),
+    F(8, '選舉補助款如何影響小黨生存', '社會切片 / 政治', 21, '門檻設在哪裡，會決定哪些聲音能留在政治場域。比較不同制度設計的取捨。', 4),
+    F(9, '中央與地方財政劃分：統籌分配款的爭議', '經濟切片 / 財政', 26, '錢要怎麼分，才算公平？從公式設計看地方財政的長期結構問題。', 1),
+    F(10, '住宅價格指數整理', '資料閱覽室 / 數據', 3, '整理公開的住宅價格指數，依縣市與年度排列，供文章引用與讀者自行查核。', 0, 950000),
+    F(11, '長照服務人力統計報告', '資料閱覽室 / 報告', 5, '長照服務人力的公開統計資料彙整，含服務類別與區域分布。', 0, 2600000),
+    F(12, '家庭收支調查摘要', '資料閱覽室 / 數據', 30, '家庭所得、消費結構的公開調查摘要，作為多篇經濟切片文章的背景資料。', 0, 1300000)
+  ];
+  return { files, folders };
+}
 
 /* ---------- 啟動 ---------- */
 (() => {
   const d = new Date(), w = '日一二三四五六'[d.getDay()];
   $('#today').textContent = `${d.getFullYear()} 年 ${d.getMonth() + 1} 月 ${d.getDate()} 日　星期${w}`;
+  $('#yr').textContent = d.getFullYear();
 })();
+setMode(store('tos-mode') || 'plain');
+renderNav();
 renderAuth();
+{ const p = parseHash(); if (p.view) state.view = VIEWS.includes(p.view) ? p.view : 'home'; }
+render();
 load().then(() => {
+  renderNav(); render();
   // 網址帶 #檔案ID 時直接開啟該文章（可複製網址分享單篇）
-  const id = decodeURIComponent(location.hash.slice(1));
-  if (id && state.files.some(f => f.id === id)) openReader(id);
+  const p = parseHash();
+  if (p.id && state.files.some(f => f.id === p.id)) openReader(p.id);
 });
 </script>
 <script src="https://accounts.google.com/gsi/client" async defer onload="initAuth()"></script>

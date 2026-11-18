@@ -35,20 +35,41 @@ button{font:inherit;color:inherit}
 .mast-tag{text-align:center;font-family:var(--serif);font-size:15px;color:var(--muted);margin:0 0 18px;letter-spacing:.08em}
 .mast-rule{border:0;border-top:4px double var(--rule);margin:0}
 
-/* ---------- 導覽列 ---------- */
+/* ---------- 導覽列（上：議題／下：工具列） ---------- */
 .navbar{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--rule)}
-.navbar .wrap{display:flex;align-items:center;gap:14px;min-height:50px;flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
-.topics{display:flex;gap:2px;flex-wrap:wrap;flex:1}
-.topic{border:0;background:transparent;padding:6px 10px;cursor:pointer;font-size:14px;font-weight:500;position:relative;display:inline-flex;align-items:baseline;gap:5px}
+.nav-topics{display:flex;align-items:center;gap:14px;min-height:48px}
+.nav-label{font-size:11px;font-weight:700;letter-spacing:.24em;color:var(--muted);flex:none;padding-right:14px;border-right:1px solid var(--line);line-height:20px}
+.topics{display:flex;gap:2px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.topics::-webkit-scrollbar{display:none}
+.topic{border:0;background:transparent;padding:12px 10px;cursor:pointer;font-size:14.5px;font-weight:500;position:relative;display:inline-flex;align-items:baseline;gap:5px;white-space:nowrap;flex:none}
 .topic i{display:none}
 .topic small{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
 .topic::after{content:"";position:absolute;left:10px;right:10px;bottom:0;height:3px;background:var(--c,var(--accent));transform:scaleX(0);transition:transform .2s;transform-origin:left}
 .topic:hover::after,.topic.on::after{transform:scaleX(1)}
 .topic.on{font-weight:700}
-.search{position:relative}
-.search input{width:220px;padding:7px 10px 7px 30px;border:1px solid var(--rule);border-radius:0;background:transparent;color:var(--ink);font:inherit;font-size:13.5px;outline:none}
-.search input:focus{box-shadow:inset 0 -2px 0 var(--accent)}
-.search::before{content:"⌕";position:absolute;left:10px;top:50%;transform:translateY(-52%);color:var(--muted);font-size:16px}
+
+/* 工具列：所有控制項同高、同框線、同圓角、同字級 */
+.nav-tools{border-top:1px solid var(--line);background:color-mix(in srgb,var(--ink) 3%,var(--paper))}
+.nav-tools .wrap{display:flex;align-items:center;gap:10px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+.nav-sp{flex:1}
+.ctl{--h:40px;height:var(--h);display:inline-flex;align-items:center;gap:8px;padding:0 14px;
+  border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);
+  font:inherit;font-size:14px;line-height:1;white-space:nowrap;transition:border-color .15s,box-shadow .15s,background .15s}
+.ctl:hover{border-color:var(--muted)}
+.ctl:focus-within{border-color:var(--ink);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+.ctl .ico{color:var(--muted);font-size:17px;line-height:1;transform:translateY(-1px)}
+.ctl input,.ctl select{border:0;outline:none;background:transparent;color:inherit;font:inherit;font-size:14px;height:100%;padding:0;min-width:0}
+.ctl.search{flex:0 1 380px;min-width:200px;cursor:text}
+.ctl.search input{flex:1}
+.ctl.sort{padding-right:10px;cursor:pointer}
+.ctl-k{color:var(--muted);font-size:13px;padding-right:8px;border-right:1px solid var(--line);height:18px;display:inline-flex;align-items:center}
+.ctl.sort select{cursor:pointer;padding-right:18px;appearance:none;-webkit-appearance:none;font-weight:500;
+  background:linear-gradient(45deg,transparent 50%,var(--muted) 50%) right 7px center/5px 5px no-repeat,
+             linear-gradient(-45deg,transparent 50%,var(--muted) 50%) right 2px center/5px 5px no-repeat}
+.ctl-btn{cursor:pointer;font-weight:700;letter-spacing:.04em}
+.ctl-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.ctl-btn.primary:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.ctl-btn.ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .select{padding:7px 8px;border:1px solid var(--rule);border-radius:0;background:transparent;color:var(--ink);font:inherit;font-size:13px}
 .btn{border:1px solid var(--rule);background:transparent;padding:7px 14px;border-radius:0;cursor:pointer;font-size:13px;font-weight:700;letter-spacing:.06em;
   display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--ink);white-space:nowrap;transition:background .15s,color .15s}
@@ -58,9 +79,13 @@ button{font:inherit;color:inherit}
 .btn:disabled{opacity:.45;cursor:default}
 .status{color:var(--muted);font-size:12px;margin:18px 0 10px;letter-spacing:.1em}
 
-.auth{display:flex;align-items:center;gap:8px;min-height:32px}
-.auth .me{font-size:12px;color:var(--muted);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.auth .me b{color:#fff;background:var(--accent);font-size:10.5px;padding:1px 5px;margin-left:4px;letter-spacing:.1em}
+.auth{display:flex;align-items:center;gap:10px;min-height:40px}
+.auth .gbtn{height:40px;display:flex;align-items:center}
+.ctl.user{padding:0 12px 0 6px;max-width:300px;cursor:default}
+.ctl.user .av{width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--paper);font-family:var(--serif);font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;flex:none}
+.ctl.user .em{overflow:hidden;text-overflow:ellipsis;font-size:13.5px}
+.ctl.user .badge{flex:none;color:#fff;background:var(--accent);font-size:11px;font-weight:700;padding:3px 6px;border-radius:3px;letter-spacing:.08em}
+.auth .hint-off{font-size:12px;color:var(--muted)}
 .cmt-signin{margin-top:10px;min-height:0}
 [hidden]{display:none!important}
 
@@ -185,8 +210,16 @@ button{font:inherit;color:inherit}
   .feature{grid-template-columns:1fr;gap:18px}
   .feature .body{order:0}
   .feature .cover{aspect-ratio:3/2}
-  .search input{width:100%}
-  .search{flex:1}
+  .nav-label{display:none}
+  .nav-topics{min-height:44px}
+  .ctl.search{flex:1 1 100%;order:-1}
+  .nav-sp{display:none}
+  .nav-tools .wrap{gap:8px}
+  .auth{margin-left:auto;gap:8px}
+  .ctl{padding:0 11px}
+  .ctl-k{display:none}
+  .ctl.user{padding:0 8px 0 6px}
+  .ctl.user .em{display:none}
   .mast-top span:nth-child(2){display:none}
   .rinfo{position:absolute;right:0;top:0;bottom:0;width:min(88vw,340px);box-shadow:-10px 0 30px rgba(0,0,0,.25);z-index:2}
   .hide-sm{display:none}
@@ -209,16 +242,28 @@ button{font:inherit;color:inherit}
 </header>
 
 <nav class="navbar">
-  <div class="wrap">
+  <div class="wrap nav-topics">
+    <span class="nav-label">議題</span>
     <div class="topics" id="topics"></div>
-    <label class="search"><input id="q" type="search" placeholder="搜尋標題、摘要、議題"></label>
-    <select id="sort" class="select" title="排序">
-      <option value="new">最新</option>
-      <option value="old">最早</option>
-      <option value="title">標題</option>
-    </select>
-    <button class="btn primary" id="uploadBtn" hidden>＋ 投稿</button>
-    <div class="auth" id="authBox"></div>
+  </div>
+  <div class="nav-tools">
+    <div class="wrap">
+      <label class="ctl search" title="搜尋">
+        <span class="ico" aria-hidden="true">⌕</span>
+        <input id="q" type="search" placeholder="搜尋標題、摘要、議題">
+      </label>
+      <label class="ctl sort" title="排序">
+        <span class="ctl-k">排序</span>
+        <select id="sort">
+          <option value="new">最新</option>
+          <option value="old">最早</option>
+          <option value="title">標題</option>
+        </select>
+      </label>
+      <span class="nav-sp"></span>
+      <button class="ctl ctl-btn primary" id="uploadBtn" hidden>＋ 投稿</button>
+      <div class="auth" id="authBox"></div>
+    </div>
   </div>
 </nav>
 
@@ -824,13 +869,17 @@ function renderGoogleButton(el, opts) {
 function renderAuth() {
   const box = $('#authBox');
   if (auth.email) {
-    box.innerHTML = `<span class="me" title="${esc(auth.email)}">${esc(auth.email)}${auth.admin ? '<b>管理員</b>' : ''}</span>` +
-      `<button class="btn" id="signOutBtn">登出</button>`;
+    box.innerHTML = `<span class="ctl user" title="${esc(auth.email)}"><span class="av">${esc(auth.email.slice(0, 1).toUpperCase())}</span>` +
+      `<span class="em">${esc(auth.email)}</span>${auth.admin ? '<span class="badge">管理員</span>' : ''}</span>` +
+      `<button class="ctl ctl-btn ghost" id="signOutBtn">登出</button>`;
     $('#signOutBtn').onclick = signOut;
   } else {
     box.innerHTML = '';
-    if (!clientIdOk()) box.innerHTML = '<span class="me">（尚未設定登入）</span>';
-    else renderGoogleButton(box);
+    if (!clientIdOk()) box.innerHTML = '<span class="hint-off">（尚未設定 Google 登入）</span>';
+    else {
+      box.innerHTML = '<div class="gbtn"></div>';
+      renderGoogleButton(box.firstChild, { size: 'large', text: 'signin_with', logo_alignment: 'left' });
+    }
   }
   $('#uploadBtn').hidden = !auth.admin;
   if (state.cur && $('#descEdit').hidden) $('#editDesc').hidden = !auth.admin;
